@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block head %} Home Page {% endblock %}
+
+{% block body %}
+
+
+<div class="col-md-12">
+  <table id="example" class="table table-striped table-bordered" style="width:100%">
+
+    <thead>
+      <tr>
+        <td>ID</td>
+          <td>Submission time</td>
+          <td>Vote number</td>
+          <td>Question ID</td>
+          <td>Message</td>
+          <td>Image</td>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in answers %}
+    <tr>
+        <td>
+          {{row[0]}}
+        </td>
+          <td>
+          {{row[1]}}
+        </td>
+          <td>
+          {{row[2]}}
+        </td>
+          <td>
+          {{row[3]}}
+        </td>
+          <td>
+          {{row[4]}}
+        </td>
+          <td>
+          {{row[5]}}
+        </td>
+
+      {% endfor %}
+     </tr>
+    </tbody>
+  </table>
+</div>
+{% for row in answers %}
+<form action="{{url_for('comment_to_answer', answer_id=row[0])}}" method="POST" id="textarea">
+  {% endfor %}
+<div class="form-group">
+    <label for="comment_answer" id="stuff" ><h3>Comment</h3></label><br>
+    <textarea id="comment_answer" name="comment_answer" rows="10" cols="100"></textarea>
+    <br>
+  </div>
+    <input id="submit-answer" type="submit" name="btn" value="Post Comment">
+</form>
+
+{% endblock %}

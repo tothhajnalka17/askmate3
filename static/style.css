@@ -1,0 +1,146 @@
+.login_right{
+  position: fixed;
+  left: 90%;
+}
+.top_question{
+  position: relative;
+  right:-35%;
+}
+
+.logo_left{
+  position: fixed;
+  left: 5%;
+}
+
+.cards{
+  position: static;
+  left: 25%;
+}
+
+.center {
+  position: relative;
+  top: 10%;
+  left: 10%;
+  font-size: 18px;
+}
+
+.navright{
+  position: static;
+  right: 0%;
+
+}
+
+.orangebtn{
+  color: antiquewhite;
+  background: #928574;
+  max-width: 86px;
+  max-height: 40px
+}
+
+.submitbtn{
+  color: antiquewhite;
+  background: #928574;
+  max-width: 250px;
+  max-height: 40px
+}
+
+.text_hide{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.idright{
+  position: relative;
+  right: 2%
+}
+
+.text-antiquewhite{
+  color: antiquewhite;
+}
+.navbar { background-color: #484848; }
+.navbar .navbar-nav .nav-link { color: #fff; }
+.navbar .navbar-nav .nav-link:hover { color: #fbc531; }
+.navbar .navbar-nav .active > .nav-link { color: #fbc531; }
+
+
+.body {
+  background-image:url('background1.jpg');
+  opacity: 25%;
+}
+
+.demo-bg {
+  opacity: 0.6;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+}
+
+.qstbackground {
+  background: antiquewhite;
+
+}
+
+.active-pink-textarea.md-form label.active {
+  color: #f48fb1;
+}
+.pink-textarea textarea.md-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid #f48fb1;
+  box-shadow: 0 1px 0 0 #f48fb1;
+}
+.pink-textarea.md-form .prefix.active {
+  color: #f48fb1;
+}
+.active-pink-textarea.md-form textarea.md-textarea:focus:not([readonly])+label {
+  color: #f48fb1;
+}
+
+.active-amber-textarea.md-form label.active {
+  color: #ffa000;
+}
+.amber-textarea textarea.md-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid #ffa000;
+  box-shadow: 0 1px 0 0 #ffa000;
+}
+.amber-textarea.md-form .prefix.active {
+  color: #ffa000;
+}
+.active-amber-textarea.md-form textarea.md-textarea:focus:not([readonly])+label {
+  color: #ffa000;
+}
+
+.active-pink-textarea-2 textarea.md-textarea {
+  border-bottom: 1px solid #f48fb1;
+  box-shadow: 0 1px 0 0 #f48fb1;
+}
+.active-pink-textarea-2.md-form label.active {
+  color: #f48fb1;
+}
+.active-pink-textarea-2.md-form label {
+  color: #f48fb1;
+}
+.active-pink-textarea-2.md-form .prefix {
+  color: #f48fb1;
+}
+.active-pink-textarea-2.md-form textarea.md-textarea:focus:not([readonly])+label {
+  color: #f48fb1;
+}
+
+.active-amber-textarea-2 textarea.md-textarea {
+  border-bottom: 1px solid #ffa000;
+  box-shadow: 0 1px 0 0 #ffa000;
+}
+.active-amber-textarea-2.md-form label.active {
+  color: #ffa000;
+}
+.active-amber-textarea-2.md-form label {
+  color: #ffa000;
+}
+.active-amber-textarea-2.md-form .prefix {
+  color: #ffa000;
+}
+.active-amber-textarea-2.md-form textarea.md-textarea:focus:not([readonly])+label {
+  color: #ffa000;
+}

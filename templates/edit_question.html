@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block head %} Edit Question Page {% endblock %}
+
+{% block body %}
+
+{% for question in question_data %}
+  <form action="/edit/{{ question.id }}" method="POST" id="txtArea">
+    <div class="form-group-add">
+      <p><label for="title">Edit the title</label></p>
+      <textarea id="title" name="title" rows="5" cols="50">{{ question.title }}</textarea>
+      <br>
+    </div>
+
+
+  <div class="form-group-add">
+    <p><label for="message">Edit the message</label></p>
+    <textarea id="message" name="message" rows="10" cols="100">{{ question.message }}</textarea>
+    <br>
+    <input type="submit" value="Edit">
+  </div>
+{% endfor %}
+
+</form>
+
+{% endblock %}

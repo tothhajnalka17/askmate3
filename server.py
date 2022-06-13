@@ -1,13 +1,259 @@
-from flask import Flask, render_template
-from bonus_questions import SAMPLE_QUESTIONS
+import random
+
+from flask import Flask, get_flashed_messages, request, render_template, redirect, url_for, flash
+import psycopg2
+import psycopg2.extras
+import smtplib, ssl
+import os
+import data_manager
+import datetime
+
+# Required for sending email, can be commented out from line 116
+sender_email = "gudmonpg4@gmail.com"
+email_password = os.environ.get("EMAIL_PASSWORD")
+rec_email = sender_email
+port = 465
+context = ssl.create_default_context()
+
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY")
 
 
-@app.route("/bonus-questions")
-def main():
-    return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS)
+@app.route("/")
+def route_home():
+    list_question = data_manager.get_questions()
+    return render_template("home.html", list_question=list_question)
+
+
+@app.route("/list")
+def route_list():
+    list_questions = data_manager.get_questions()
+    return render_template("list.html", list_questions=list_questions)
+
+
+@app.route("/question/<int:question_id>", methods=["POST", "GET"])
+def get_display_question(question_id):
+    question_data = data_manager.get_question_by_id(question_id)
+    answer_data = data_manager.get_answers_by_question_id(question_id)
+    comment_question_data = data_manager.get_question_comment(question_id)
+    comment_answer_data = data_manager.get_answer_comment()
+
+    if request.method == "GET":
+        data_manager.view_counting(question_id)
+
+    elif request.method == 'POST':
+
+        if "submit_answer" in request.form:
+            submission_time = datetime.datetime.now()
+            vote_number = question_data['view_number']
+            message = request.form.get("answer")
+            image = "something.jpg"
+            data_manager.add_answer(submission_time, vote_number, question_id, message, image)
+            return redirect(url_for('get_display_question', question_id=question_id))
+
+        elif "submit_comment" in request.form:
+            submission_time = datetime.datetime.now()
+            message = request.form["message"]
+            data_manager.add_comment_to_question(submission_time, question_id, message)
+            return redirect(url_for('get_display_question', question_id=question_id))
+
+        elif "likes" in request.form:
+            return redirect(url_for('get_display_question', question_id=question_id))
+
+        elif "submit_answer_comments" in request.form:
+            submission_time = datetime.datetime.now()
+
+            question_id = None
+            answer_id = random.choice(range(150))
+            edited_count = 0
+            message = request.form['message']
+            data_manager.add_comment_to_answer(question_id, answer_id, submission_time, message, edited_count)
+            return redirect(url_for('get_display_question', question_id=question_id))
+
+
+
+    return render_template('displayquestion.html', question_id=question_id, question_data=question_data,
+                           answer_data=answer_data, comment_answer_data=comment_answer_data, comment_question_data=comment_question_data)
+
+
+
+
+@app.route("/question/<int:question_id>/new-answer", methods=["GET", "POST"])
+def add_answer(question_id):
+    if "answer" in request.form:
+        if request.method == "POST":
+            question_data = data_manager.get_question_by_id(question_id)
+            return render_template('add_answer.html', question_id=question_id, question_data=question_data)
+    elif "add_answer" in request.form:
+        if request.method == "POST":
+            submission_time = str(datetime.datetime.now())
+            message = request.form.get('message')
+            vote_number = 0
+            data_manager.add_answer(submission_time, vote_number, question_id, message, image="")
+            return redirect(url_for('get_display_question', question_id=question_id))
+
+
+@app.route("/question/<int:question_id>/new-comment", methods=["POST", "GET"])
+def add_comment_to_question(question_id):
+    if request.method == "GET":
+
+        question_data = data_manager.get_question_by_id(question_id)
+        return render_template('add_comment_to_question.html', question=question_data, question_id=question_id)
+    elif request.method == "POST":
+        submission_time = datetime.datetime.now()
+        message = request.form.get("comment")
+        data_manager.add_comment_to_question(submission_time, int(question_id), message)
+        print(submission_time, question_id, message)
+        return redirect(url_for('get_display_question', question_id=question_id))
+
+
+
+@app.route("/answer/<answer_id>/new-comment", methods=["POST", "GET"])
+def comment_to_answer(answer_id):
+    if request.method == 'POST':
+        question_id = None
+        message = request.form['comment_answer']
+        submission_time = datetime.datetime.now()
+        edited_count = None
+        data4 = data_manager.get_answer_id_message_by_answer_id(answer_id)
+
+
+
+        data_manager.add_comment_to_answer(question_id, int(answer_id), message, submission_time, edited_count)
+        return redirect(url_for('get_display_question', question_id=data4[0][3]))
+
+
+    elif request.method == 'GET':
+
+        data3 = data_manager.get_answer_id_message_by_answer_id(answer_id)
+
+        return render_template('comment_to_answer.html', answers=data3)
+
+
+@app.route("/add_question", methods=["POST", "GET"])
+def add_question():
+    if request.method == "GET":
+        return render_template("add_question.html")
+
+    elif request.method == "POST":
+        submission_time = datetime.datetime.now()
+        view_number = 0
+        vote_number = 0
+        title = request.form.get("title")
+        message = request.form.get("message")
+        image = "something"
+        data_manager.add_question(submission_time, title, message, image)
+        return redirect(url_for('route_list'))
+
+#TODO query probléma
+@app.route('/edit/<int:question_id>', methods=['POST', 'GET'])
+def get_question(question_id):
+    if request.method == "GET":
+        question_data = data_manager.get_question_by_id(question_id)
+        return render_template('edit_question.html', question_data=question_data)
+    elif request.method == 'POST':
+        title = request.form['title']
+        message = request.form['message']
+        data_manager.update_question(title, message, question_id)
+        return redirect(url_for('route_list'))
+
+
+@app.route("/delete/<int:question_id>", methods=['POST', 'GET'])
+def delete_question(question_id):
+    data_manager.delete_question(question_id)
+    return redirect(url_for('route_list'))
+
+
+@app.route("/answer/<int:answer_id>/delete", methods=["GET"])
+def delete_answer(answer_id):
+    question_id = data_manager.get_question_id_by_answer_id(answer_id)
+    data_manager.delete_answer_by_id(answer_id)
+
+    return redirect(url_for('get_display_question', question_id=question_id))
+
+
+@app.route("/answer/<int:answer_id>/edit", methods=['POST', 'GET'])
+def edit_answer(answer_id):
+    if request.method == "GET":
+        answers = data_manager.get_answers_by_answer_id(answer_id)
+        return render_template('edit_answer.html', answers=answers)
+
+    elif request.method == "POST":
+        message = request.form['edit_answer']
+        data_manager.update_answer(message, answer_id)
+        question_id = data_manager.get_question_id_by_answer_id(answer_id)
+        return redirect(url_for('get_display_question', question_id=question_id))
+
+
+@app.route("/question/<int:question_id>/vote-up", methods=["POST", "GET"])
+def vote_up(question_id):
+    data_manager.update_up_vote(question_id)
+    return redirect(url_for('route_list'))
+
+
+@app.route("/question/<int:question_id>/vote-down", methods=["POST", "GET"])
+def vote_down(question_id):
+    data_manager.update_down_vote(question_id)
+    return redirect(url_for('route_list'))
+
+
+@app.route("/register", methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+        with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+            username = request.form['username']
+            # password1 = request.form['password1']
+            # password2 = request.form['password2']
+            email = request.form['email']
+            server.login(sender_email, email_password)
+            message = f'Hey {request.form.get("username")}, you have been successfully registered for the website'
+            server.sendmail(sender_email, email, message)
+            print("Sent")
+
+    return render_template('register.html')
+
+
+@app.route("/search", methods=['POST', 'GET'])
+def search():
+    search_phrase = request.args.get('search-phrase')
+
+    if search_phrase:
+        question = data_manager.get_question_by_search(search_phrase)
+        q_id = data_manager.get_question_answer_by_search_phrase(search_phrase)
+
+        helplist = []
+        for item in range(0, len(q_id)):
+            for index in q_id[item].values():
+                helplist.append(index)
+
+        another_list = []
+        for j in helplist:
+            another_list.append(data_manager.get_question_if_answer_contains(j))
+
+        final_list = []
+        for j in another_list:
+            for k in j:
+                final_list.append(list((k.values())))
+
+        if question or final_list:
+            question_final = list(question)
+            help_list = []
+            for i in range(0, len(question_final)):
+                help_list.append((list(question_final[i].values())))
+            question_final = help_list
+            final_list = final_list
+        else:
+            question_final = ""
+            final_list = ""
+    else:
+        question_final = ""
+        final_list = ""
+
+    return render_template('home.html', list_searched_items=question_final, list_searched_answer=final_list, searched_phrase=search_phrase)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        debug=True
+    )

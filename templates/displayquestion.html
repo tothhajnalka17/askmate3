@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+{% block head %} Home Page {% endblock %}
+
+{% block body %}
+
+
+
+
+      {% for question in question_data %}
+
+              <div class="card text-antiquewhite mb-3 shadow-lg p3 mb-5 mt-5 border border-dark center" style="width: 80rem; background-color: dimgrey">
+                <div class="d-flex">
+
+                </div>
+                  <div class="card-body">
+                  <h2 class="card-title">{{ question.title }}</h2>
+                  <p class="card-text">{{ question.message }}.</p>
+                      <div >
+                          <br>
+                          <br>
+                      </div >
+
+                      <div class="mb-1 ">
+                          <form method="post">
+                            <label  class="form-label gstbackground">comment to this question:</label>
+                            <textarea class="form-control qstbackground" id="message" name="message" rows="3"  placeholder="....."></textarea>
+                            <br>
+                              <div class="d-flex justify-content-between">
+                            <button name="submit_comment"  type="submit" class="submitbtn"> Post your comment</button>
+                          </form>
+                          <form action="/question/{{ question_id }}/new-answer" method="post" class="submitbtn">
+                            <input type="submit"  name="answer" value="Add an answer" />
+                          </form>
+                      </div>
+                      </div>
+                        <div class="card-text d-flex justify-content-between">
+                              <h5>  {{ question.view_number }} view </h5>
+                                <h5 style="text-align: right" >{{ question.vote_number }} likes</h5 >
+                        </div>
+                      {% for question_comment in comment_question_data %}
+                      <div class=" d-flex justify-content-between">
+                          <p class="card-text"> {{ question_comment.message }} </p>
+                          <p class="card-text"> {{ question_comment.submission_time}}</p>
+                      </div>
+                      {% endfor %}
+                </div>
+
+      {% endfor %}
+</div>
+<br>
+<h1 style="text-align: center" class="text-antiquewhite" > Possible answer </h1>
+
+<div>
+
+</div>
+{% for answer in answer_data %}
+<div class="col-md-12">
+
+
+            <div class="card text-antiquewhite mb-3 shadow-lg p3 mb-5 mt-5 border border-dark center" style="width: 80rem; background-color: dimgrey">
+                <div class="d-flex">
+
+                </div>
+                  <div class="card-body">
+                  <h1 class="card-title">{{ answer.title }}</h1>
+                  <h1 class="card-text">{{ answer.message }}.</h1>
+                      <div >
+                          <br>
+                          <br>
+                      </div >
+                    <h3> comment(s) </h3>
+
+
+                      {% for answer_comment in comment_answer_data %}
+                    <div>
+
+                      <div class="d-flex mb-5  card-text" >
+
+                          <td class="card-text" >{{ answer_comment.message }}</td>
+                          <td class="card-text"> {{ answer_comment.submission_time}} </td>
+
+                          <div>
+
+                        </div>
+                      </div>
+
+                    </div>
+                     {% endfor %}
+                    <a href="/answer/{{ answer.id }}/new-comment" name="comment" class="btn submitbtn" >comment</a>
+                      <a href="/answer/{{ answer.id }}/delete" name="delete-answer" class="btn submitbtn">delete</a>
+                    <a href="/answer/{{ answer.id }}/edit" name="edit" class="btn submitbtn">edit</a>
+                  </div>
+            </div>
+</div>
+
+{% endfor %}
+{% endblock %}

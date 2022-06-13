@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <div class="col-md-12 center ">
+
+            {% for question in list_questions %}
+                <div>
+              <div class="card text-antiquewhite mb-3 shadow-lg p3 mb-5 mt-5 border border-dark" style="width: 80rem; background-color: dimgrey">
+                <div class="d-flex">
+                  <img class="card-img-top" src="..." alt="Card image cap">
+                     <div class="card-top idright" >{{ question.id }}</div>
+                </div>
+                  <div class="card-body">
+                  <h5 class="card-title">{{ question.title }}</h5>
+                  <p class="card-text text_hide">{{ question.message }}.</p>
+                      <div >
+                          <p class="card-text ">{{ question.view_number }} view </p>
+                      </div>
+                  <a href="question/{{ question.id }}" class="btn orangebtn" >Check it</a>
+
+                </div>
+
+              </div>
+            {% endfor %}
+
+
+      </div>
+
+
+
+{% endblock %}

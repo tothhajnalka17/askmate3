@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block head %} Add comment to answer {% endblock %}
+
+{% block body %}
+
+<div class="col-md-12">
+  <table id="example" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+      <tr>
+        <td>Answer #{{ answer_id }} </td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in answer %}
+        <tr>
+            <td>{{ data.title }}</td>
+        </tr>
+        <tr>
+            <td>{{data.message}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+<form action="/question/{{ question_id }}" method="POST">
+    <label for="comment">Add a comment to this answer:</label><br>
+    <textarea name="comment" rows="10" cols="100"></textarea><br>
+    <button id="submit-comment" type="submit">Post Comment</button>
+</form>
+
+{% endblock %}

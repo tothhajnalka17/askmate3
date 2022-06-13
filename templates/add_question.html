@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block head %} Add Question Page {% endblock %}
+
+{% block body %}
+/<br>
+<div>
+<form action="{{url_for('add_question')}}" method="POST">
+  <div class="form-group-add center">
+    <p class=" text-antiquewhite"><label for="title">Your question title</label></p>
+    <textarea  style="background-color: dimgrey" class=" border border_black" id="title" name="title"  required></textarea>
+    <br>
+  </div>
+  <div class="form-group-add center">
+    <p class=" text-antiquewhite"><label for="message">Add a message</label></p>
+    <textarea style="background-color: dimgrey" class=" border border_black" id="message" name="message" rows="5" cols="50" required></textarea>
+    <br>
+  </div>
+  
+  <button class="btn submitbtn center" name="add_question">
+    Post answer
+  </button>
+</form>
+  </div>
+
+</div>
+{% endblock %}
