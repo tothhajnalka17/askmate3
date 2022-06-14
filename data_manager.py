@@ -260,3 +260,14 @@ def get_answer_id_message_by_answer_id(cursor, id):
         final_list.append(list(helplist[j].values()))
 
     return final_list
+
+
+@database_common.connection_handler
+def get_all_user_details(cursor):
+    cursor.execute("""  SELECT
+                            username,
+                            email,
+                            register_date                            
+                        FROM
+                            users""")
+    return cursor.fetchall()
