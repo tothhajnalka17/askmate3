@@ -1,6 +1,6 @@
 import random
 
-from flask import Flask, get_flashed_messages, request, render_template, redirect, url_for, flash
+from flask import Flask, session, request, render_template, redirect, url_for, flash
 import psycopg2
 import psycopg2.extras
 import smtplib, ssl
@@ -18,7 +18,8 @@ context = ssl.create_default_context()
 
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY")
+app.secret_key = "sajtosmakaroni"
+app.permanent_session_lifetime = datetime.timedelta(minutes=1)
 
 
 @app.route("/")
@@ -261,6 +262,51 @@ def register():
     else:
         return render_template('register.html')
 
+
+@app.route("/userlogin", methods=['GET', 'POST'])
+def userlogin():
+    # Check if "username" and "password" POST requests exist (user submitted form)
+    if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
+        email = request.form['email']
+        password = request.form['password']
+        account = data_manager.get_user_by_email(email)
+        print(account)
+
+        if account:
+            encrypted_password = data_manager.get_user_encrypted_password(email)
+            session.permanent = True
+            userdata = data_manager.get_username_by(email)
+            for username in userdata[0].values():
+                pass
+            session['username'] = username
+            print(session)
+            # If account exists in users table in out database
+            if util.verify_password(password, encrypted_password):
+                print("Passwords match")
+                # Create session data, we can access this data in other routes
+                # Redirect to home page
+                return redirect(url_for('route_home'))
+            elif 'user' in session:
+                return redirect(url_for('route_home'))
+
+            else:
+                # Account doesnt exist or username/password incorrect
+                flash('Incorrect username/password')
+                return redirect(url_for('userlogin'))
+        else:
+            # Account doesnt exist or username/password incorrect
+            flash('Incorrect username/password')
+            return redirect(url_for('userlogin'))
+
+    return render_template('login.html')
+
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    user = session['username']
+    flash(f'Goodbye {user}')
+    session.pop("username", None)
+    return redirect(url_for('route_home'))
 
 @app.route("/search", methods=['POST', 'GET'])
 def search():
