@@ -36,7 +36,7 @@ def route_list():
 @app.route("/users")
 def users_list():
     users_details = data_manager.get_all_user_details()
-    return render_template("users.html", user_details=users_details)
+    return render_template("users.html", users_details=users_details)
 
 
 @app.route("/question/<int:question_id>", methods=["POST", "GET"])
