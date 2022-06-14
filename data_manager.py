@@ -263,6 +263,48 @@ def get_answer_id_message_by_answer_id(cursor, id):
 
 
 @database_common.connection_handler
+def add_user(cursor, username, email, encrypted_password, register_date):
+    cursor.execute("""
+    INSERT INTO users (username, email, encrypted_password, register_date) 
+    VALUES (%(username)s, %(email)s, %(encrypted_password)s, %(register_date)s);
+    """,
+    {
+        'username': username,
+        'email': email,
+        'encrypted_password': encrypted_password,
+        'register_date': register_date
+     })
+
+
+@database_common.connection_handler
+def get_user_by_email(cursor, email):
+    cursor.execute("""
+    SELECT * FROM users WHERE email = %(email)s;
+                           """,
+                   {'email': email})
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_user_by_username(cursor, username):
+    cursor.execute("""
+    SELECT * FROM users WHERE username = %(username)s;
+                           """,
+                   {'username': username})
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_user_encrypted_password(cursor, email):
+    cursor.execute("""
+    SELECT encrypted_password FROM users WHERE email = %(email)s;
+                           """,
+                   {'email': email})
+    query = cursor.fetchall()
+    result = query[0]['encrypted_password']
+    return result
+
+@database_common.connection_handler
 def get_all_user_details(cursor):
     cursor.execute("""  SELECT
                             *

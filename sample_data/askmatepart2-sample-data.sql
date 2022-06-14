@@ -60,6 +60,15 @@ CREATE TABLE tag (
     name text
 );
 
+DROP TABLE IF EXISTS public.users;
+CREATE TABLE users (
+	id serial PRIMARY KEY,
+	username VARCHAR NOT NULL,
+	email VARCHAR NOT NULL,
+	encrypted_password VARCHAR NOT NULL,
+    register_date VARCHAR NOT NULL
+);
+
 
 ALTER TABLE ONLY answer
     ADD CONSTRAINT pk_answer_id PRIMARY KEY (id);
