@@ -1,15 +1,14 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <div class="col-md-12 center ">
-        {% for user in users_details %}
-              <div class="card text-antiquewhite mb-3 shadow-lg p3 mb-5 mt-5 border border-dark" style="width: 80rem; background-color: dimgrey">
-                <div class="d-flex">
-                  <img class="card-img-top" src="..." alt="Card image cap">
-                    <div class="card-top idright">{{ user.username }}</div>
-                    <div class="card-top idright">{{ user.register_date }}</div>
-                </div>
-              </div>
-        {% endfor %}
-    </div>
+    <h3>List of all registered users on Archy</h3>
+    {% for user in users_details %}
+        <table>
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.register_date }}</td>
+            </tr>
+        </table>
+
+    {% endfor %}
 {% endblock %}
