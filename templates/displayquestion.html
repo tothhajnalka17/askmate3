@@ -21,6 +21,7 @@
                       </div >
 
                       <div class="mb-1 ">
+                          {% if session.username %}
                           <form method="post">
                             <label  class="form-label gstbackground">comment to this question:</label>
                             <textarea class="form-control qstbackground" id="message" name="message" rows="3"  placeholder="....."></textarea>
@@ -31,7 +32,12 @@
                           <form action="/question/{{ question_id }}/new-answer" method="post" class="submitbtn">
                             <input type="submit"  name="answer" value="Add an answer" />
                           </form>
+
                       </div>
+                      {% else %}
+                                <h2>You need to be logged in to answer!</h2>
+                          {% endif%}
+                  </div>
                       </div>
                         <div class="card-text d-flex justify-content-between">
                               <h5>  {{ question.view_number }} view </h5>
@@ -86,10 +92,12 @@
 
                     </div>
                      {% endfor %}
+                  {% if session.username %}
                     <a href="/answer/{{ answer.id }}/new-comment" name="comment" class="btn submitbtn" >comment</a>
                       <a href="/answer/{{ answer.id }}/delete" name="delete-answer" class="btn submitbtn">delete</a>
                     <a href="/answer/{{ answer.id }}/edit" name="edit" class="btn submitbtn">edit</a>
                   </div>
+                {% endif%}
             </div>
 </div>
 

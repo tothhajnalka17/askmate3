@@ -308,6 +308,7 @@ def logout():
     session.pop("username", None)
     return redirect(url_for('route_home'))
 
+
 @app.route("/search", methods=['POST', 'GET'])
 def search():
     search_phrase = request.args.get('search-phrase')
