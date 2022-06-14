@@ -7,7 +7,8 @@ import smtplib, ssl
 import os
 import data_manager
 import datetime
-
+import re
+import util
 # Required for sending email, can be commented out from line 116
 sender_email = "gudmonpg4@gmail.com"
 email_password = os.environ.get("EMAIL_PASSWORD")
@@ -17,7 +18,7 @@ context = ssl.create_default_context()
 
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY")
+app.secret_key = "duihnduz812161267jasvopc"
 
 
 @app.route("/")
@@ -198,20 +199,61 @@ def vote_down(question_id):
     return redirect(url_for('route_list'))
 
 
-@app.route("/register", methods=['POST', 'GET'])
+@app.route("/register", methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-            username = request.form['username']
-            # password1 = request.form['password1']
-            # password2 = request.form['password2']
-            email = request.form['email']
-            server.login(sender_email, email_password)
-            message = f'Hey {request.form.get("username")}, you have been successfully registered for the website'
-            server.sendmail(sender_email, email, message)
-            print("Sent")
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
+        username = request.form.get('username')
+        email = request.form.get('email')
+        original_password = request.form.get('password')
 
-    return render_template('register.html')
+        isUsernameTaken = data_manager.get_user_by_username(request.form.get('username'))
+        isEmailTaken = data_manager.get_user_by_email(request.form.get('email'))
+        usernameRegex = re.compile(r'[A-Za-z0-9]+')
+        emailRegex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
+
+        if isUsernameTaken:
+            flash('this username is already in use')
+            return render_template('register.html')
+
+        elif isEmailTaken:
+            flash('this email is already in use')
+            return render_template('register.html')
+
+        elif not request.form.get("username") or not request.form.get("email") or not request.form.get("password"):
+            flash('Fill out the registration form properly!')
+            return render_template('register.html')
+
+        elif not re.fullmatch(emailRegex, email):
+            flash('Invalid email address!')
+            return render_template('register.html')
+
+        elif not re.match(usernameRegex, username):
+            flash('Username must contain only characters and numbers!')
+            return render_template('register.html')
+
+        elif len(username) <= 2:
+            flash('Username must be at least 2 characters long!')
+            return render_template('register.html')
+
+        elif len(original_password) <= 6:
+            flash('Password must be at least 6 characters long!')
+            return render_template('register.html')
+
+        else:
+            # Handle registration, adding to DB
+            encrypted_password = util.hash_password(original_password)
+            register_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            data_manager.add_user(username, email, encrypted_password, register_date)
+            flash('Registration successful!')
+            return redirect(url_for('route_home'))
+
+    elif request.method == 'POST':
+        # Form is empty
+        flash('Please fill out the form!')
+        return render_template('register.html')
+
+    else:
+        return render_template('register.html')
 
 
 @app.route("/search", methods=['POST', 'GET'])
