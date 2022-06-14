@@ -18,7 +18,7 @@ context = ssl.create_default_context()
 
 
 app = Flask(__name__)
-app.secret_key = "duihnduz812161267jasvopc"
+app.secret_key = os.environ.get("SECRET_KEY")
 
 
 @app.route("/")
