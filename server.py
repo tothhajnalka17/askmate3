@@ -32,6 +32,12 @@ def route_list():
     return render_template("list.html", list_questions=list_questions)
 
 
+@app.route("/users")
+def users_list():
+    users_details = data_manager.get_all_user_details()
+    return render_template("users.html", user_details=users_details)
+
+
 @app.route("/question/<int:question_id>", methods=["POST", "GET"])
 def get_display_question(question_id):
     question_data = data_manager.get_question_by_id(question_id)
