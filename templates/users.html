@@ -1,12 +1,17 @@
 {% extends "layout.html" %}
 
 {% block body %}
+    {% if session.username %}
+
+    <p>Welcome, {{ session.username}}!</p>
+    <a href="{{url_for('logout')}}">Logout</a><br>
+
 
     <h3>List of all registered users on Archy</h3>
         <table>
             <tr>
                 <td>Username</td>
-                <td>Date registered</td>
+                <td>Registered Date</td>
             </tr>
             {% for user in users_details %}
             <tr>
@@ -14,5 +19,11 @@
                 <td>{{ user.register_date }}</td>
             </tr>
             {% endfor %}
+
         </table>
+    {% else %}
+    <h2>You are not logged in!</h2>
+    <a href="{{url_for('register')}}">Register</a><br>
+    <a href="{{url_for('userlogin')}}">Login</a><br>
+    {% endif%}
 {% endblock %}
