@@ -37,7 +37,7 @@ def add_answer(cursor, submission_time, vote_number, question_id, message, image
 def add_comment_to_question(cursor, submission_time, question_id, message, edited_count):
     cursor.execute("""
                 INSERT INTO comment (submission_time, question_id, message, edited_count)
-                VALUES(%(submission_time)s, %(question_id)s, %(message)s), %(edited_count)s;
+                VALUES(%(submission_time)s, %(question_id)s, %(message)s, %(edited_count)s);
                     """,
                    {
                        'submission_time': submission_time,
