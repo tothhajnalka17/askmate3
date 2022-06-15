@@ -13,17 +13,40 @@
             <input type="submit" name="submit_button" value="Search">
         </form>
     </div>
+<div style="margin-top: 5rem" class="container-fluid border-bottom">
 
+
+    {% if type == "both" %}
+        {% for ans in answer %}
+        <div class="border-bottom">
+            <h2 style="text-align: center"> Answer:</h2>
+            <br>
+            <p style="font-size: 22px"> {{ ans.message }} </p>
+            <a class="btn btn-warning btn-circle text-uppercase" style="margin-top: 2rem" href="/question/{{ ans.question_id }}">check it</a>
+        </div>
+        {% endfor %}
+        {% for question in quest %}
+            <div style="margin-top: 5rem" class="border-bottom">
+            <h2 style="text-align: center"> Question:  </h2>
+            <br>
+            <p style="font-size: 22px"> {{ question.message }}</p>
+             <a class="btn btn-warning btn-circle text-uppercase" style="margin-top: 2rem" href="/question/{{ question.id }}">check it</a>
+            </div>
+        {% endfor %}
+        {% elif answer == [] and quest != []%}
         {% for res in list_searched_items %}
 
-    <div style="margin-top: 5rem" class="container-fluid border-bottom">
-        {% if answer == [] %}
+
         <div class="border-bottom">
             <h2 style="text-align: center"> Title:</h2>
             <br>
             <p style="font-size: 22px"> {{ res.title }} </p>
         </div>
-        {% endif %}
+        {% else %}
+
+
+
+
         <div style="margin-top: 5rem">
             <h2 style="text-align: center"> {{ type }}  </h2>
             <br>
@@ -32,8 +55,9 @@
     </div>
             <br>
         <a class="btn btn-warning btn-circle text-uppercase" href="/question/{{ res.id }}"> check it </a>
-
     {% endfor %}
+    {% endif %}
+
 
 
     {% if session.username %}

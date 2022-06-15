@@ -331,14 +331,18 @@ def search():
     if search_phrase:
         questions = data_manager.get_question_by_search(search_phrase)
         answers = data_manager.get_question_answer_by_search_phrase(search_phrase)
-        if questions == []:
+
+        if questions != [] and answers != []:
+            result = answers + questions
+            type = "both"
+        elif questions == []:
             result = answers
             type = "answer"
         elif answers == []:
             result = questions
             type = "question"
 
-    return render_template('home.html', list_searched_items=result, search_phrase=search_phrase, type=type, answer=answers)
+    return render_template('home.html', list_searched_items=result, search_phrase=search_phrase, type=type, answer=answers, quest=questions)
 
 
 @app.route('/comment/<int:comment_id>/edit', methods=["GET", "POST"])
