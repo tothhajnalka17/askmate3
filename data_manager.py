@@ -228,7 +228,7 @@ def get_question_by_search(cursor, search_phrase):
 @database_common.connection_handler
 def get_question_answer_by_search_phrase(cursor, search_phrase):
     cursor.execute("""
-    SELECT answer.question_id FROM answer WHERE answer.message LIKE %(search_phrase)s;
+    SELECT * FROM answer WHERE answer.message LIKE %(search_phrase)s;
                        """,
                    {'search_phrase': '%{}%'.format(search_phrase)})
     return cursor.fetchall()

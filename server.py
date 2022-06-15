@@ -329,38 +329,20 @@ def search():
     search_phrase = request.args.get('search-phrase')
 
     if search_phrase:
-        question = data_manager.get_question_by_search(search_phrase)
-        q_id = data_manager.get_question_answer_by_search_phrase(search_phrase)
+        questions = data_manager.get_question_by_search(search_phrase)
+        answers = data_manager.get_question_answer_by_search_phrase(search_phrase)
 
-        helplist = []
-        for item in range(0, len(q_id)):
-            for index in q_id[item].values():
-                helplist.append(index)
+        if questions != [] and answers != []:
+            result = answers + questions
+            type = "both"
+        elif questions == []:
+            result = answers
+            type = "answer"
+        elif answers == []:
+            result = questions
+            type = "question"
 
-        another_list = []
-        for j in helplist:
-            another_list.append(data_manager.get_question_if_answer_contains(j))
-
-        final_list = []
-        for j in another_list:
-            for k in j:
-                final_list.append(list((k.values())))
-
-        if question or final_list:
-            question_final = list(question)
-            help_list = []
-            for i in range(0, len(question_final)):
-                help_list.append((list(question_final[i].values())))
-            question_final = help_list
-            final_list = final_list
-        else:
-            question_final = ""
-            final_list = ""
-    else:
-        question_final = ""
-        final_list = ""
-
-    return render_template('home.html', list_searched_items=question_final, list_searched_answer=final_list, searched_phrase=search_phrase)
+    return render_template('home.html', list_searched_items=result, search_phrase=search_phrase, type=type, answer=answers, quest=questions)
 
 
 @app.route('/comment/<int:comment_id>/edit', methods=["GET", "POST"])
