@@ -311,3 +311,12 @@ def get_all_user_details(cursor):
                         FROM
                             users""")
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_username_by(cursor, email):
+    cursor.execute("""
+        SELECT username FROM users WHERE email = %(email)s;
+                               """,
+                   {'email': email})
+    return cursor.fetchall()
