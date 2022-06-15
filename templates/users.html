@@ -3,12 +3,12 @@
 {% block body %}
     {% if session.username %}
 
-    <p>Welcome, {{ session.username}}!</p>
-    <a href="{{url_for('logout')}}">Logout</a><br>
 
-
-    <h3>List of all registered users on Archy</h3>
-        <table>
+        <table class="table table-striped table-hover">
+        <tr>
+            <td><h2>List of all registered users on Archy</h2></td>
+            <td></td>
+        </tr>
             <tr>
                 <td>Username</td>
                 <td>Registered Date</td>

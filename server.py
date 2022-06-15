@@ -52,7 +52,7 @@ def get_display_question(question_id):
     elif request.method == 'POST':
 
         if "new_answer" in request.form:
-            submission_time = datetime.datetime.now()
+            submission_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             vote_number = 0
             message = request.form.get("new_answer")
             image = "something.jpg"
@@ -60,7 +60,7 @@ def get_display_question(question_id):
             return redirect(url_for('get_display_question', question_id=question_id))
 
         elif "submit_comment" in request.form:
-            submission_time = datetime.datetime.now()
+            submission_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             message = request.form["message"]
             data_manager.add_comment_to_question(submission_time, question_id, message)
             return redirect(url_for('get_display_question', question_id=question_id))
@@ -69,7 +69,7 @@ def get_display_question(question_id):
             return redirect(url_for('get_display_question', question_id=question_id))
 
         elif "submit_answer_comments" in request.form:
-            submission_time = datetime.datetime.now()
+            submission_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             answer_query = data_manager.get_answers_by_question_id(question_id)
             question_id = None
 
@@ -100,7 +100,7 @@ def add_answer(question_id):
             return render_template('add_answer.html', question_id=question_id, question_data=question_data)
     elif "add_answer" in request.form:
         if request.method == "POST":
-            submission_time = str(datetime.datetime.now())
+            submission_time = str(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')
             message = request.form.get('message')
             vote_number = 0
             data_manager.add_answer(submission_time, vote_number, question_id, message, image="")
@@ -114,7 +114,7 @@ def add_comment_to_question(question_id):
         question_data = data_manager.get_question_by_id(question_id)
         return render_template('add_comment_to_question.html', question=question_data, question_id=question_id)
     elif request.method == "POST":
-        submission_time = datetime.datetime.now()
+        submission_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         message = request.form.get("comment_question")
         edited_count = 0
         data_manager.add_comment_to_question(submission_time, question_id, message, edited_count)
@@ -127,7 +127,7 @@ def comment_to_answer(answer_id):
     if request.method == 'POST':
         question_id = None
         message = request.form['comment_answer']
-        submission_time = datetime.datetime.now()
+        submission_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         edited_count = None
         data4 = data_manager.get_answer_id_message_by_answer_id(answer_id)
 
@@ -372,7 +372,7 @@ def edit_question_comment(comment_id):
         return render_template('edit_question_comment.html', comment=comment, question_id=question_id)
     else:
         new_comment = request.form["comment-text"]
-        submission_time = datetime.datetime.now()
+        submission_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         edited_count += 1
         data_manager.update_comment(id=comment_id, message=new_comment, edited_count=edited_count, submission_time=submission_time)
         return redirect(url_for('get_display_question', question_id=question_id))
