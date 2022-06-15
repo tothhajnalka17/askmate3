@@ -367,3 +367,8 @@ def get_comment(cursor, comment_id):
                        'id': comment_id
                    })
     return cursor.fetchone()
+
+
+@database_common.connection_handler
+def delete_comment(cursor, comment_id):
+    cursor.execute(f"DELETE FROM comment WHERE id = {comment_id}")
