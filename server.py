@@ -1,6 +1,6 @@
 import random
 
-from flask import Flask, get_flashed_messages, request, render_template, redirect, url_for, flash
+from flask import Flask, session, request, render_template, redirect, url_for, flash
 import psycopg2
 import psycopg2.extras
 import smtplib, ssl
@@ -10,15 +10,15 @@ import datetime
 import re
 import util
 # Required for sending email, can be commented out from line 116
-sender_email = "gudmonpg4@gmail.com"
+
+
 email_password = os.environ.get("EMAIL_PASSWORD")
-rec_email = sender_email
-port = 465
 context = ssl.create_default_context()
 
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY")
+app.secret_key = "sajtosmakaroni"
+app.permanent_session_lifetime = datetime.timedelta(minutes=1)
 
 
 @app.route("/")
@@ -36,7 +36,7 @@ def route_list():
 @app.route("/users")
 def users_list():
     users_details = data_manager.get_all_user_details()
-    return render_template("users.html", user_details=users_details)
+    return render_template("users.html", users_details=users_details)
 
 
 @app.route("/question/<int:question_id>", methods=["POST", "GET"])
@@ -262,6 +262,66 @@ def register():
 
     else:
         return render_template('register.html')
+
+
+@app.route("/userlogin", methods=['GET', 'POST'])
+def userlogin():
+    # Check if "username" and "password" POST requests exist (user submitted form)
+    if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
+        email = request.form['email']
+        password = request.form['password']
+        account = data_manager.get_user_by_email(email)
+        print(account)
+
+        if account:
+            encrypted_password = data_manager.get_user_encrypted_password(email)
+            session.permanent = True
+            userdata = data_manager.get_username_by(email)
+            for username in userdata[0].values():
+                pass
+            session['username'] = username
+
+            userid = data_manager.get_user_id_by(email)
+            for id in userid[0].values():
+                pass
+            session['id'] = id
+            print(id)
+            # If account exists in users table in out database
+            if util.verify_password(password, encrypted_password):
+                print("Passwords match")
+                # Create session data, we can access this data in other routes
+                # Redirect to home page
+                return redirect(url_for('route_home'))
+            elif 'user' in session:
+                return redirect(url_for('route_home'))
+
+            else:
+                # Account doesnt exist or username/password incorrect
+                flash('Incorrect username/password')
+                return redirect(url_for('userlogin'))
+        else:
+            # Account doesnt exist or username/password incorrect
+            flash('Incorrect username/password')
+            return redirect(url_for('userlogin'))
+
+    return render_template('login.html')
+
+
+@app.route('/user/<user_id>', methods=['GET', 'POST'])
+def user(user_id):
+    if 'username' in session:
+        userdata = data_manager.get_user_by_userid(session['id'])
+        return render_template('profile.html', userdata=userdata)
+    else:
+        return render_template('profile.html')
+
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    user = session['username']
+    flash(f'Goodbye {user}')
+    session.pop("username", None)
+    return redirect(url_for('route_home'))
 
 
 @app.route("/search", methods=['POST', 'GET'])

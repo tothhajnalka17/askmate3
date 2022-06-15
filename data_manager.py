@@ -295,6 +295,15 @@ def get_user_by_username(cursor, username):
 
 
 @database_common.connection_handler
+def get_user_by_userid(cursor, id):
+    cursor.execute("""
+    SELECT * FROM users WHERE id = %(id)s;
+                           """,
+                   {'id': id})
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
 def get_user_encrypted_password(cursor, email):
     cursor.execute("""
     SELECT encrypted_password FROM users WHERE email = %(email)s;
@@ -310,4 +319,21 @@ def get_all_user_details(cursor):
                             *
                         FROM
                             users""")
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_username_by(cursor, email):
+    cursor.execute("""
+        SELECT username FROM users WHERE email = %(email)s;
+                               """,
+                   {'email': email})
+    return cursor.fetchall()
+
+@database_common.connection_handler
+def get_user_id_by(cursor, email):
+    cursor.execute("""
+        SELECT id FROM users WHERE email = %(email)s;
+                               """,
+                   {'email': email})
     return cursor.fetchall()

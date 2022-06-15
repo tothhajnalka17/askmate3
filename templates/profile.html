@@ -1,0 +1,21 @@
+
+{% extends "layout.html" %}
+{% block head %} Profile Page {% endblock %}
+
+{% block body %}
+
+    {% if session.username %}
+
+<h1>Welcome, {{ session.username}}!</h1>
+<h1><a href="{{url_for('route_home')}}">Back to home</a><br></h1>
+<h1><a href="{{url_for('logout')}}">Logout</a><br></h1>
+{% for data in userdata %}
+    <h2>ID: {{ data.id }} <br> Name: {{ data.username }}<br> Register date: {{ data.register_date }}</h2>
+{% endfor %}
+{% else %}
+<h2>You are not logged in!</h2>
+<a href="{{url_for('register')}}">Register</a><br>
+<a href="{{url_for('userlogin')}}">Login</a><br>
+{% endif%}
+
+{% endblock %}

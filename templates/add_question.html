@@ -2,7 +2,8 @@
 {% block head %} Add Question Page {% endblock %}
 
 {% block body %}
-/<br>
+{% if session.username %}
+<br>
 <div>
 <form action="{{url_for('add_question')}}" method="POST">
   <div class="form-group-add center">
@@ -23,4 +24,9 @@
   </div>
 
 </div>
+    {% else %}
+    <h2>You need to be logged in to ask a question!</h2>
+    <a href="{{url_for('register')}}">Register</a><br>
+    <a href="{{url_for('userlogin')}}">Login</a><br>
+{% endif%}
 {% endblock %}
