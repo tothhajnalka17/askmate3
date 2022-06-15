@@ -96,8 +96,8 @@
         <div class="comment-tabs">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="active"><a href="" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Answers</h4></a></li>
-                <li><a href= "{{ question.id }}/new-answer" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Add answer</h4></a></li>
-                <li><a href="#account-settings" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Account settings</h4></a></li>
+                <li><a href="{{ question.id }}/new-answer" ><h4 class="reviews text-capitalize">Add answer</h4></a></li>
+
 
             </ul>
             {% for answer in answer_data %}
