@@ -32,7 +32,8 @@ CREATE TABLE answer (
     id serial NOT NULL,
     submission_time timestamp without time zone,
     vote_number integer,
-    question_id integer,
+    question_id integer REFERENCES public.question
+                 ON DELETE CASCADE,
     message text,
     image text
 );
@@ -40,8 +41,10 @@ CREATE TABLE answer (
 DROP TABLE IF EXISTS public.comment;
 CREATE TABLE comment (
     id serial NOT NULL,
-    question_id integer,
-    answer_id integer,
+    question_id integer REFERENCES public.question
+                     ON DELETE CASCADE,
+    answer_id integer REFERENCES public.answer
+                     ON DELETE CASCADE,
     message text,
     submission_time timestamp without time zone,
     edited_count integer
@@ -50,13 +53,15 @@ CREATE TABLE comment (
 
 DROP TABLE IF EXISTS public.question_tag;
 CREATE TABLE question_tag (
-    question_id integer NOT NULL,
+    question_id integer NOT NULL REFERENCES public.question
+                          ON DELETE CASCADE,
     tag_id integer NOT NULL
 );
 
 DROP TABLE IF EXISTS public.tag;
 CREATE TABLE tag (
-    id serial NOT NULL,
+    id serial NOT NULL REFERENCES public.question_tag
+                 ON DELETE CASCADE,
     name text
 );
 

@@ -124,7 +124,7 @@ def get_question_id_by_answer_id(cursor, answer_id):
 
 @database_common.connection_handler
 def delete_answer_by_id(cursor, answer_id):
-    cursor.execute(f"DELETE CASCADE FROM answer WHERE id = {answer_id}")
+    cursor.execute(f"DELETE FROM answer WHERE id = {answer_id}")
 
 
 @database_common.connection_handler
