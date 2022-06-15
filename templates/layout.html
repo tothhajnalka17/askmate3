@@ -35,6 +35,15 @@ body {
 				</ul>
 
 				<ul class="navbar-nav ml-auto login_right">
+                    {% if session %}
+                    <li class="nav-item pl-1">
+						<a class="nav-link" href="/user/{{session.id}}"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1 "></i>Profile</a>
+					</li>
+                    {% else %}
+                    <li class="nav-item pl-1">
+						<a class="nav-link" href="/user/0"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1 "></i>Profile</a>
+					</li>
+                    {% endif %}
 					<li class="nav-item pl-1">
 						<a class="nav-link" href="/userlogin"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1 "></i>Login</a>
 					</li>

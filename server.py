@@ -279,7 +279,12 @@ def userlogin():
             for username in userdata[0].values():
                 pass
             session['username'] = username
-            print(session)
+
+            userid = data_manager.get_user_id_by(email)
+            for id in userid[0].values():
+                pass
+            session['id'] = id
+            print(id)
             # If account exists in users table in out database
             if util.verify_password(password, encrypted_password):
                 print("Passwords match")
@@ -299,6 +304,15 @@ def userlogin():
             return redirect(url_for('userlogin'))
 
     return render_template('login.html')
+
+
+@app.route('/user/<user_id>', methods=['GET', 'POST'])
+def user(user_id):
+    if 'username' in session:
+        userdata = data_manager.get_user_by_userid(session['id'])
+        return render_template('profile.html', userdata=userdata)
+    else:
+        return render_template('profile.html')
 
 
 @app.route('/logout', methods=['GET', 'POST'])
