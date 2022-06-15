@@ -115,8 +115,8 @@ def add_comment_to_question(question_id):
         return render_template('add_comment_to_question.html', question=question_data, question_id=question_id)
     elif request.method == "POST":
         submission_time = datetime.datetime.now()
-        message = request.form.get("comment")
-        data_manager.add_comment_to_question(submission_time, int(question_id), message)
+        message = request.form.get("comment_question")
+        data_manager.add_comment_to_question(submission_time, question_id, message)
         return redirect(url_for('get_display_question', question_id=question_id))
 
 
