@@ -14,14 +14,7 @@
         x.style.display = "none";
       }
     }
-    function show_hide_answer() {
-      var x = document.getElementById("answer_comments");
-      if (x.style.display === "none") {
-        x.style.display = "block";
-      } else {
-        x.style.display = "none";
-      }
-    }
+
 </script>
 
     {% for question in question_data  %}
@@ -46,7 +39,7 @@
                                 <li class="media media-replied">
                                     <div class="media-body">
                                       <div class="well well-lg">
-                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> unknow? </h4>
+                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> unknown </h4>
                                           <ul class="media-date text-uppercase reviews list-inline">
                                             <li class="dd">{{ question_comments.submission_time }}</li>
                                           </ul>
@@ -80,6 +73,16 @@
 
             </ul>
             {% for answer in answer_data %}
+                <script>
+                function show_hide_answer(answer_id) {
+                  var x = document.getElementById("answer_comments"+answer_id);
+                  if (x.style.display === "none") {
+                    x.style.display = "block";
+                  } else {
+                    x.style.display = "none";
+                  }
+                }
+                </script>
                 <div class="tab-content">
                     <div class="tab-pane active" id="comments-logout">
                         <ul class="media-list">
@@ -87,7 +90,7 @@
                           <li class="media">
                             <div class="media-body">
                               <div class="well well-lg">
-                                  <h4 class="media-heading text-uppercase reviews">unknow</h4>
+                                  <h4 class="media-heading text-uppercase reviews">unknown user</h4>
                                   <ul class="media-date text-uppercase reviews list-inline">
                                     <li class="dd">{{ answer.submission_time }}</li>
                                   </ul>
@@ -96,13 +99,13 @@
                                       <a href="{{url_for('comment_to_answer', answer_id=answer.id)}}">Comment on answer_id: {{ answer.id }}</a><br>
                                     {{ answer.message }}
                                   </p>
-                                  <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply"><span class="glyphicon glyphicon-share-alt"></span> [{{ answer.vote_number }}] like</a>
-                                  <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide_answer()"><span class="glyphicon glyphicon-comment"></span> comments</a>
+                                  <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply"><span class="glyphicon glyphicon-share-alt"></span> [{{ answer.vote_number }}] Like</a>
+                                  <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide_answer({{ answer.id }})"><span class="glyphicon glyphicon-comment"></span> Show Comments</a>
 
                               </div>
                             </div>
 
-                            <div class="collapse" id="answer_comments">
+                            <div class="collapse" id="answer_comments{{ answer.id }}">
                             <div>
                             <ul class="media-list">
                                 <li class="media media-replied">
@@ -112,7 +115,7 @@
                                           <form name="submit_answer_comments" method="post" action="{{ url_for('comment_to_answer', answer_id = answer.id) }}">
                                           <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> post your comment:</h4>
                                             <textarea name="comment_answer" placeholder="{{ answer.id }}"></textarea>
-                                          <button class="btn btn-warning btn-circle" name="comment_answer" type="submit"> post comment </button>
+                                          <button class="btn btn-warning btn-circle text-uppercase" name="comment_answer" type="submit"> post comment </button>
                                           </form>
                                       </div>
                                     </div>
@@ -126,7 +129,7 @@
 
                                     <div class="media-body">
                                       <div class="well well-lg">
-                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> unknow people</h4>
+                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> unknown user</h4>
                                           <ul class="media-date text-uppercase reviews list-inline">
                                             <li class="dd"> {{ answer_comment.submission_time }}</li>
                                           </ul>
