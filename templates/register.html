@@ -5,8 +5,8 @@
 
 
 <div class="login-box">
-    <h2><a href="{{url_for('route_home')}}">Back to Home</a></h2>
-    <h1>Register for the website!</h1>
+
+    <h2>Register</h2>
 
   <form action="{{url_for('register')}}" method="POST">
     <div class="user-box">
@@ -23,13 +23,14 @@
       <input type="password" id="password" name="password" required="">
       <label>Password</label>
     </div>
+        <h4><a href="{{url_for('userlogin')}}">Already have an account? Login!</a></h4>
 
-
-
-    <button class="custom-btn btn-3">
+      <div class="user-box button">
+    <button class="btn">
     Register
     </button>
+          </div>
   </form>
 </div>
-<h3><a href="{{url_for('userlogin')}}">Already have an account? Login!</a></h3>
+
 {% endblock %}

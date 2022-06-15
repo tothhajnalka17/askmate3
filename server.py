@@ -145,13 +145,13 @@ def add_question():
         return render_template("add_question.html")
 
     elif request.method == "POST":
-        submission_time = datetime.datetime.now()
+        submission_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         view_number = 0
         vote_number = 0
         title = request.form.get("title")
         message = request.form.get("message")
         image = "something"
-        data_manager.add_question(submission_time, title, message, image)
+        data_manager.add_question(submission_time, view_number, vote_number, title, message, image)
         return redirect(url_for('route_list'))
 
 #TODO query probléma
@@ -242,7 +242,7 @@ def register():
             flash('Username must be at least 2 characters long!')
             return render_template('register.html')
 
-        elif len(original_password) <= 6:
+        elif len(original_password) <= 5:
             flash('Password must be at least 6 characters long!')
             return render_template('register.html')
 

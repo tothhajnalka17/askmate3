@@ -58,12 +58,14 @@ def get_answers_by_answer_id(cursor, answer_id):
 
 
 @database_common.connection_handler
-def add_question(cursor, submission_time, title, message, image):
+def add_question(cursor, submission_time, view_number, vote_number, title, message, image):
     cursor.execute("""
-                        INSERT INTO comment (submission_time, title, image) 
-    VALUES(%(submission_time)s, %(title)s, %(image)s);
+                        INSERT INTO question (submission_time, view_number, vote_number, title, message, image) 
+    VALUES(%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s);
                        """,
                    {
+                       'view_number': view_number,
+                       'vote_number': vote_number,
                        'submission_time': submission_time,
                        'title': title,
                        'message': message,
