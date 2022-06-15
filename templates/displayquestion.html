@@ -95,13 +95,15 @@
                                     {{ answer.message }}
                                   </p>
                                   <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply"><span class="glyphicon glyphicon-share-alt"></span> [{{ answer.vote_number }}] like</a>
-                                  <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide_answer()"><span class="glyphicon glyphicon-comment"></span> comments</a>
+                                  <a class="btn btn-warning btn-circle text-uppercase"  data-toggle="collapse" onclick="show_hide_answer()"><span class="glyphicon glyphicon-comment"></span> comments</a>
 
                               </div>
                             </div>
 
-                            <div class="collapse" id="answer_comments">
-                            {% for answer_comment in comment_answer_data %}
+                        {% for answer_comment in comment_answer_data %}
+                          {% if answer_comment.answer_id == answer.id %}
+
+                            <div  id="answer_comments">
                             <ul class="media-list">
                                 <li class="media media-replied">
 
@@ -119,8 +121,10 @@
                                     </div>
                                 </li>
                               </ul>
-                                {% endfor %}
+
                             </div>
+                            {% endif %}
+                          {% endfor %}
                           </li>
                         </ul>
                     </div>
