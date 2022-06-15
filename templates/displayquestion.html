@@ -125,6 +125,22 @@
                             </div>
                             {% endif %}
                           {% endfor %}
+                          <div>
+                            <ul class="media-list">
+                                <li class="media media-replied">
+
+                                    <div class="media-body">
+                                      <div class="well well-lg" methods="post" >
+                                          <form name="submit_answer_comments" method="post">
+                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> post your comment:</h4>
+                                            <textarea name="message"></textarea>
+                                          <button class="btn btn-warning btn-circle" name="submit_answer_comments" type="submit" methods="post"> post comment </button>
+                                          </form>
+                                      </div>
+                                    </div>
+                                </li>
+                              </ul>
+                          </div>
                           </li>
                         </ul>
                     </div>
