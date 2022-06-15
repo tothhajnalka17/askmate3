@@ -309,7 +309,7 @@ def userlogin():
 @app.route('/user/<user_id>', methods=['GET', 'POST'])
 def user(user_id):
     if 'username' in session:
-        userdata = data_manager.get_user_by_userid(user_id)
+        userdata = data_manager.get_user_by_userid(session['id'])
         return render_template('profile.html', userdata=userdata)
     else:
         return render_template('profile.html')
