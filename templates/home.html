@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<div style="margin-left: 3rem">
+<div class="container bgdiv col-sm-20 col-sm-offset--3">
     <div>
 
         <form action="/search" >
@@ -13,8 +13,7 @@
             <input type="submit" name="submit_button" value="Search">
         </form>
     </div>
-<div style="margin-top: 5rem" class="container-fluid border-bottom">
-
+    <div style="margin-top: 5rem" class="container-fluid border-bottom">
 
     {% if type == "both" %}
         {% for ans in answer %}

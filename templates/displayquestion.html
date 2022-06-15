@@ -5,9 +5,9 @@
 
 
     {% for question in question_data  %}
-        <div class="container; ">
+        <div class="container bgdiv">
         <div class="row">
-        <div class="col-xs-10 col-md-offset-1">
+        <div class="col-sm-20 col-sm-offset--3">
 
             <h3>
             <b>Question #{{ question.id }}:</b>
@@ -41,7 +41,7 @@
                     }
                 </script>
 
-                <div class="collapse" id="question_comments" style="padding: 0px 50px; margin-top: 25px">
+                <div class="collapse bgdiv" id="question_comments" style="padding: 0px 50px; margin-top: 25px">
                 {% for question_comments in comment_question_data %}
                 <ul class="media-list">
                 <li class="media media-replied">
@@ -78,7 +78,7 @@
                     <div class="well well-lg" methods="post" >
                         <form name="submit_answer_comments" method="post" action="{{ url_for(('add_comment_to_question'), question_id=question.id) }}">
                             <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> post your comment:</h4>
-                            <textarea name="comment_question" rows="4" cols="155" ></textarea>
+                            <textarea name="comment_question" style="size: 12rem 3rem" ></textarea>
                             <button class="btn btn-warning btn-circle text-uppercase" name="comment_question" type="submit"> post comment </button>
                         </form>
                     </div>
@@ -95,7 +95,7 @@
     </div>
 
 
-<div class="container">
+<div class="container bgdiv">
   <div class="row">
     <div class="col-sm-20 col-sm-offset--3" id="logout">
         <div class="page-header">
@@ -120,7 +120,7 @@
                   }
                 }
                 </script>
-                <div class="tab-content">
+                <div class="tab-content bgdiv">
                     <div class="tab-pane active" id="comments-logout">
                         <ul class="media-list">
 
@@ -135,7 +135,7 @@
                                             <span class="glyphicon glyphicon-remove"></span>Delete</a>
                                       </li>
                                   </ul>
-                                  <h4 class="media-comment">
+                                  <h4 class="media-comment" style="max-width: 800px">
 
 
                                     {{ answer.message }}

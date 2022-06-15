@@ -1,9 +1,14 @@
 body {
     color: black;
 }
-.home{
-
+body{
+    background-image: url('background2.jpg');
 }
+
+.bgdiv{
+    background: white;
+}
+
 .top-question{
 
 }

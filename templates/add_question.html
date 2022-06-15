@@ -3,16 +3,16 @@
 
 {% block body %}
 {% if session.username %}
+<div class="container bgdiv">
+<div class="col-sm-20 col-sm-offset--3">
 
-<div class="container-fluid border-bottom">
-<div class="col-xs-10 col-md-offset-1">
     <form action="{{url_for('add_question')}}" method="POST">
-        <div style="margin-top: 5rem; margin-left: 30%; margin-right: 30%">
+        <div style="margin-top: 5rem; margin-left: 25%; margin-right: 25%">
         <div>
         <h3>Add a title to your question:</h3>
         <textarea  class=" border border_black" style="width: 55rem; height: 7rem" id="title" name="title"  required></textarea>
         </div>
-        <div style="margin-top: 3rem">
+        <div>
         <h3>Add a message to your question:</h3>
         <textarea id="message" name="message" style="width: 55rem; height: 7rem" required></textarea>
         </div>
@@ -21,18 +21,19 @@
         </button>
         </div>
     </form>
-</div>
+
 </div>
     {% else %}
     <br>
-<div style="margin-top: 5rem; margin-left: 42%; margin-right: 42%">
+<div class="container col-sm-20 col-sm-offset--3 bgdiv">
     <h2 >You are not logged in!</h2>
     <ul class="text-uppercase list-inline" style="text-align: left; margin-top: 1rem">
         <li class="dd" style="margin-top: 2rem; margin-left: 30%; margin-right: 28%"><a class="btn btn-warning btn-circle text-uppercase" href="{{url_for('register')}}">Register</a></li>
             <br>
-        <li class="dd" style="margin-top: 1rem"><a class="btn btn-warning btn-circle text-uppercase" href="{{url_for('userlogin')}}">Login</a></li>
+        <li class="dd" style="margin-top: 2rem; margin-left: 31%; margin-right: 28%"><a class="btn btn-warning btn-circle text-uppercase" href="{{url_for('userlogin')}}">Login</a></li>
             <br>
     </ul>
+</div>
 </div>
 {% endif%}
 {% endblock %}

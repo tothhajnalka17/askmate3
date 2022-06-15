@@ -342,7 +342,8 @@ def search():
             result = questions
             type = "question"
 
-    return render_template('home.html', list_searched_items=result, search_phrase=search_phrase, type=type, answer=answers, quest=questions)
+    return render_template('home.html', list_searched_items=result, search_phrase=search_phrase, type=type,
+                           answer=answers, quest=questions)
 
 
 @app.route('/comment/<int:comment_id>/edit', methods=["GET", "POST"])
@@ -356,7 +357,8 @@ def edit_question_comment(comment_id):
         new_comment = request.form["comment-text"]
         submission_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         edited_count += 1
-        data_manager.update_comment(id=comment_id, message=new_comment, edited_count=edited_count, submission_time=submission_time)
+        data_manager.update_comment(id=comment_id, message=new_comment, edited_count=edited_count,
+                                    submission_time=submission_time)
         return redirect(url_for('get_display_question', question_id=question_id))
 
 
