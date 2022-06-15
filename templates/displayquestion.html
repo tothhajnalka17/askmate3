@@ -92,6 +92,8 @@
                                     <li class="dd">{{ answer.submission_time }}</li>
                                   </ul>
                                   <p class="media-comment">
+
+                                      <a href="{{url_for('comment_to_answer', answer_id=answer.id)}}">Comment on answer_id: {{ answer.id }}</a><br>
                                     {{ answer.message }}
                                   </p>
                                   <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply"><span class="glyphicon glyphicon-share-alt"></span> [{{ answer.vote_number }}] like</a>
@@ -101,7 +103,24 @@
                             </div>
 
                             <div class="collapse" id="answer_comments">
+                            <div>
+                            <ul class="media-list">
+                                <li class="media media-replied">
+
+                                    <div class="media-body">
+                                      <div class="well well-lg" methods="post" >
+                                          <form name="submit_answer_comments" method="post" action="{{ url_for('comment_to_answer', answer_id = answer.id) }}">
+                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> post your comment:</h4>
+                                            <textarea name="comment_answer" placeholder="{{ answer.id }}"></textarea>
+                                          <button class="btn btn-warning btn-circle" name="comment_answer" type="submit"> post comment </button>
+                                          </form>
+                                      </div>
+                                    </div>
+                                </li>
+                              </ul>
+                          </div>
                             {% for answer_comment in comment_answer_data %}
+                                {% if answer_comment.answer_id == answer.id %}
                             <ul class="media-list">
                                 <li class="media media-replied">
 
@@ -112,14 +131,19 @@
                                             <li class="dd"> {{ answer_comment.submission_time }}</li>
                                           </ul>
                                           <p class="media-comment">
+
                                             {{ answer_comment.message }}
+
                                             </p>
 
                                         </div>
                                     </div>
+
                                 </li>
                               </ul>
+                                {% endif %}
                                 {% endfor %}
+
                             </div>
                           </li>
                         </ul>

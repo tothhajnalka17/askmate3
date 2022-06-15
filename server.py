@@ -70,9 +70,12 @@ def get_display_question(question_id):
 
         elif "submit_answer_comments" in request.form:
             submission_time = datetime.datetime.now()
-
+            answer_query = data_manager.get_answers_by_question_id(question_id)
             question_id = None
-            answer_id = random.choice(range(150))
+
+            print(answer_query)
+            answer_id = answer_query['answer_id']
+            print(answer_id)
             edited_count = 0
             message = request.form['message']
             data_manager.add_comment_to_answer(question_id, answer_id, submission_time, message, edited_count)
@@ -133,11 +136,7 @@ def comment_to_answer(answer_id):
         return redirect(url_for('get_display_question', question_id=data4[0][3]))
 
 
-    elif request.method == 'GET':
 
-        data3 = data_manager.get_answer_id_message_by_answer_id(answer_id)
-
-        return render_template('comment_to_answer.html', answers=data3)
 
 
 @app.route("/add_question", methods=["POST", "GET"])

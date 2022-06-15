@@ -205,7 +205,7 @@ def get_answer_id_by_question_id(cursor, question_id):
 
 @database_common.connection_handler
 def get_answer_comment(cursor):
-    cursor.execute(f"SELECT message, submission_time FROM comment WHERE answer_id != 0 ")
+    cursor.execute(f"SELECT * FROM comment WHERE answer_id != 0 ")
     return cursor.fetchall()
 
 @database_common.connection_handler
