@@ -12,22 +12,22 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
-	<nav class="navbar top-fixed" style="background-color: #555555">
+	<nav class="navbar top-fixed " style="background-color: #555555">
 
 
-            <a class="navbar-brand home" href="/"><i class="fa fa-graduation-cap fa-lg mr-2" ></i>ARCHY</a>
-            <a class="navbar-brand top-question" href="/list"><i class="fa fa-graduation-cap fa-lg mr-2"></i>Top questions</a>
-            <a class="navbar-brand post-question" href="/add_question"><i class="fa fa-graduation-cap fa-lg mr-2"></i>Post question</a>
-            <a class="navbar-brand list-users" href="{{ url_for('users_list') }}"><i class="fa fa-graduation-cap fa-lg mr-2"></i>List Users</a>
+            <a class="navbar-brand home text-white" href="/"><i class="fa fa-graduation-cap fa-lg mr-2" ></i>ARCHY</a>
+            <a class="navbar-brand top-question text-white" href="/list"><i class="fa fa-graduation-cap fa-lg mr-2"></i>Top questions</a>
+            <a class="navbar-brand post-question text-white" href="/add_question"><i class="fa fa-graduation-cap fa-lg mr-2"></i>Post question</a>
+            <a class="navbar-brand list-users text-white" href="{{ url_for('users_list') }}"><i class="fa fa-graduation-cap fa-lg mr-2"></i>List Users</a>
         {% if session %}
-            <a class="navbar-brand profile-tab" href="/user/{{session.id}}"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1 "></i>Profile</a>
+            <a class="navbar-brand profile-tab text-white" href="/user/{{session.id}}"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1 "></i>Profile</a>
 
         {% else %}
-            <a class="navbar-brand user-tab" href="/user/0"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1 "></i>Profile</a>
+            <a class="navbar-brand user-tab text-white" href="/user/0"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1 "></i>Profile</a>
 
         {% endif %}
-             <a class="navbar-brand login-tab" href="/userlogin" style="right:3rem"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1 "></i>Login</a>
-            <a class="navbar-brand register-tab" href="/register" style="right:1rem"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1"></i>Register</a>
+             <a class="navbar-brand login-tab text-white" href="/userlogin" style="right:3rem"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1 "></i>Login</a>
+            <a class="navbar-brand register-tab text-white" href="/register" style="right:1rem"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1"></i>Register</a>
 
 
 
