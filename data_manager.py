@@ -34,15 +34,16 @@ def add_answer(cursor, submission_time, vote_number, question_id, message, image
 
 
 @database_common.connection_handler
-def add_comment_to_question(cursor, submission_time, question_id, message):
+def add_comment_to_question(cursor, submission_time, question_id, message, edited_count):
     cursor.execute("""
-                INSERT INTO comment (submission_time, question_id, message)
-                VALUES(%(submission_time)s, %(question_id)s, %(message)s);
+                INSERT INTO comment (submission_time, question_id, message, edited_count)
+                VALUES(%(submission_time)s, %(question_id)s, %(message)s), %(edited_count)s;
                     """,
                    {
                        'submission_time': submission_time,
                        'question_id': question_id,
-                       'message': message})
+                       'message': message,
+                       'edited_count': edited_count})
 
 
 @database_common.connection_handler
