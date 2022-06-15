@@ -17,26 +17,26 @@
 </script>
 
     {% for question in list_questions  %}
-        <div class="container; border-bottom" style="padding-bottom: 4rem">
-        <div class="row">
-        <div class="col-xs-10 col-md-offset-1">
+    <div class="container; border-bottom" style="padding-bottom: 4rem">
+    <div class="row">
+    <div class="col-xs-10 col-md-offset-1">
 
-            <h3>
-            Question #{{ question.id }}
-            </h3>
+        <h3>
+        Question #{{ question.id }}
+        </h3>
 
-            <br>
+        <br>
 
-            <h1>
-                {{ question.title }}
-            </h1>
+        <h1>
+            {{ question.title }}
+        </h1>
 
-            <p style="font-weight: lighter">
-                {{ question.message }}
-            </p>
+        <p style="font-weight: lighter">
+            {{ question.message }}
+        </p>
 
-            <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply"><span class="glyphicon glyphicon-share-alt"></span> {{ question.vote_number }} like</a>
-            <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide()"><span class="glyphicon glyphicon-comment"></span> comments</a>
+        <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question.id }}/vote-up" id="reply"><span class="glyphicon glyphicon-share-alt"></span> {{ question.vote_number }} like</a>
+        <a class="btn btn-warning btn-circle text-uppercase" href="/question/{{ question.id }}"> check it </a>
 
 
     </div>
