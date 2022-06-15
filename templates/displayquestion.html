@@ -2,9 +2,7 @@
 {% block head %} Home Page {% endblock %}
 
 {% block body %}
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
 <script>
     function show_hide() {
       var x = document.getElementById("question_comments");
@@ -18,23 +16,30 @@
 </script>
 
     {% for question in question_data  %}
-    <div class="container; ">
-    <div class="row">
-    <div class="col-xs-10 col-md-offset-1">
-        <h3>
-           Question #{{ question.id }}
-        </h3>
-        <br>
-        <h1>
-            {{ question.title }}
-        </h1>
-        <p style="font-weight: lighter">
-            {{ question.message }}
-        </p>
-        <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply"><span class="glyphicon glyphicon-share-alt"></span> {{ question.vote_number }} like</a>
-        <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide()"><span class="glyphicon glyphicon-comment"></span> comments</a>
-        {% for question_comments in comment_question_data %}
-        <div class="collapse" id="question_comments" style="padding: 0px 50px; margin-top: 25px">
+        <div class="container; ">
+        <div class="row">
+        <div class="col-xs-10 col-md-offset-1">
+
+            <h3>
+            Question #{{ question.id }}
+            </h3>
+
+            <br>
+
+            <h1>
+                {{ question.title }}
+            </h1>
+
+            <p style="font-weight: lighter">
+                {{ question.message }}
+            </p>
+
+            <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply"><span class="glyphicon glyphicon-share-alt"></span> {{ question.vote_number }} like</a>
+            <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide()"><span class="glyphicon glyphicon-comment"></span> comments</a>
+
+            {% for question_comments in comment_question_data %}
+
+            <div class="collapse" id="question_comments" style="padding: 0px 50px; margin-top: 25px">
             <ul class="media-list">
                                 <li class="media media-replied">
                                     <div class="media-body">
@@ -49,9 +54,9 @@
                                             {{ question_comments.message }}
                                           </p>
 
-                                      </div>
-                                    </div>
-                                </li>
+                      </div>
+                    </div>
+                </li>
             </ul>
         </div>
             {% endfor %}

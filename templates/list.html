@@ -1,30 +1,69 @@
-{% extends "layout.html" %}
+
+    {% extends "layout.html" %}
+{% block head %} Home Page {% endblock %}
 
 {% block body %}
 
-    <div class="col-md-12 center ">
+<script>
+    function show_hide() {
+      var x = document.getElementById("question_comments");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
 
-            {% for question in list_questions %}
-                <div>
-              <div class="card text-antiquewhite mb-3 shadow-lg p3 mb-5 mt-5 border border-dark" style="width: 80rem; background-color: dimgrey">
-                <div class="d-flex">
-                  <img class="card-img-top" src="..." alt="Card image cap">
-                     <div class="card-top idright" >{{ question.id }}</div>
-                </div>
-                  <div class="card-body">
-                  <h5 class="card-title">{{ question.title }}</h5>
-                  <p class="card-text text_hide">{{ question.message }}.</p>
-                      <div>
-                          <p class="card-text ">{{ question.view_number }} view </p>
+</script>
+
+    {% for question in list_questions  %}
+        <div class="container; ">
+        <div class="row">
+        <div class="col-xs-10 col-md-offset-1">
+
+            <h3>
+            Question #{{ question.id }}
+            </h3>
+
+            <br>
+
+            <h1>
+                {{ question.title }}
+            </h1>
+
+            <p style="font-weight: lighter">
+                {{ question.message }}
+            </p>
+
+            <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply"><span class="glyphicon glyphicon-share-alt"></span> {{ question.vote_number }} like</a>
+            <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide()"><span class="glyphicon glyphicon-comment"></span> comments</a>
+
+            {% for question_comments in comment_question_data %}
+
+            <div class="collapse" id="question_comments" style="padding: 0px 50px; margin-top: 25px">
+            <ul class="media-list">
+                                <li class="media media-replied">
+                                    <div class="media-body">
+                                      <div class="well well-lg">
+                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> unknown </h4>
+                                          <ul class="media-date text-uppercase reviews list-inline">
+                                            <li class="dd">{{ question_comments.submission_time }}</li>
+                                            <li class="dd">Edited {{ question_comments.edited_count }} times.</li>
+                                            <li class="dd"><a href="/comment/{{ question_comments.id }}/edit">Edit comment</a></li>
+                                          </ul>
+                                          <p class="media-comment">
+                                            {{ question_comments.message }}
+                                          </p>
+
                       </div>
-                  <a href="question/{{ question.id }}" class="btn orangebtn" >Check it</a>
-
-                </div>
-
-              </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
             {% endfor %}
+    </div>
+    </div>
+    </div>
 
-
-      </div>
-
+{% endfor %}
 {% endblock %}
