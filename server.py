@@ -378,6 +378,14 @@ def edit_question_comment(comment_id):
         return redirect(url_for('get_display_question', question_id=question_id))
 
 
+@app.route('/comment/<int:comment_id>/delete', methods=["GET"])
+def delete_question_comment(comment_id):
+    comment = data_manager.get_comment(comment_id)
+    question_id = comment["question_id"]
+    data_manager.delete_comment(comment_id)
+    return redirect(url_for('get_display_question', question_id=question_id))
+
+
 if __name__ == "__main__":
     app.run(
         debug=True
