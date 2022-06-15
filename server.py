@@ -116,7 +116,8 @@ def add_comment_to_question(question_id):
     elif request.method == "POST":
         submission_time = datetime.datetime.now()
         message = request.form.get("comment_question")
-        data_manager.add_comment_to_question(submission_time, question_id, message)
+        edited_count = 0
+        data_manager.add_comment_to_question(submission_time, question_id, message, edited_count)
         return redirect(url_for('get_display_question', question_id=question_id))
 
 
@@ -367,16 +368,12 @@ def edit_question_comment(comment_id):
     comment = data_manager.get_comment(comment_id)
     question_id = comment["question_id"]
     edited_count = comment['edited_count']
-    submission_time = comment['submission_time']
     if request.method == "GET":
         return render_template('edit_question_comment.html', comment=comment, question_id=question_id)
     else:
         new_comment = request.form["comment-text"]
         submission_time = datetime.datetime.now()
-        if type(edited_count) is None:
-            edited_count = 1
-        else:
-            edited_count += 1
+        edited_count += 1
         data_manager.update_comment(id=comment_id, message=new_comment, edited_count=edited_count, submission_time=submission_time)
         return redirect(url_for('get_display_question', question_id=question_id))
 
