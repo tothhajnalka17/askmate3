@@ -42,6 +42,8 @@
                                           <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> unknown </h4>
                                           <ul class="media-date text-uppercase reviews list-inline">
                                             <li class="dd">{{ question_comments.submission_time }}</li>
+                                            <li class="dd">Edited {{ question_comments.edited_count }} times.</li>
+                                            <li class="dd"><a href="/comment/{{ question_comments.id }}/edit">Edit comment</a></li>
                                           </ul>
                                           <p class="media-comment">
                                             {{ question_comments.message }}

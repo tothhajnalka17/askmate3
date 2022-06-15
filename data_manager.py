@@ -337,3 +337,30 @@ def get_user_id_by(cursor, email):
                                """,
                    {'email': email})
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def update_comment(cursor, id, message, edited_count, submission_time):
+    cursor.execute("""
+                UPDATE comment
+                SET message = %(message)s,
+                edited_count = %(edited_count)s,
+                submission_time = %(submission_time)s
+                WHERE id = %(id)s;
+                """,
+                   {
+                       'message': message,
+                       'id': id,
+                       'edited_count': edited_count,
+                       'submission_time': submission_time})
+
+
+@database_common.connection_handler
+def get_comment(cursor, comment_id):
+    cursor.execute("""
+                SELECT * FROM comment
+                WHERE id = %(id)s;""",
+                   {
+                       'id': comment_id
+                   })
+    return cursor.fetchone()
