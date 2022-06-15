@@ -17,7 +17,7 @@
 </script>
 
     {% for question in list_questions  %}
-        <div class="container; ">
+        <div class="container; border-bottom" style="padding-bottom: 4rem">
         <div class="row">
         <div class="col-xs-10 col-md-offset-1">
 
@@ -38,29 +38,7 @@
             <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply"><span class="glyphicon glyphicon-share-alt"></span> {{ question.vote_number }} like</a>
             <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide()"><span class="glyphicon glyphicon-comment"></span> comments</a>
 
-            {% for question_comments in comment_question_data %}
 
-            <div class="collapse" id="question_comments" style="padding: 0px 50px; margin-top: 25px">
-            <ul class="media-list">
-                                <li class="media media-replied">
-                                    <div class="media-body">
-                                      <div class="well well-lg">
-                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> unknown </h4>
-                                          <ul class="media-date text-uppercase reviews list-inline">
-                                            <li class="dd">{{ question_comments.submission_time }}</li>
-                                            <li class="dd">Edited {{ question_comments.edited_count }} times.</li>
-                                            <li class="dd"><a href="/comment/{{ question_comments.id }}/edit">Edit comment</a></li>
-                                          </ul>
-                                          <p class="media-comment">
-                                            {{ question_comments.message }}
-                                          </p>
-
-                      </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-            {% endfor %}
     </div>
     </div>
     </div>
