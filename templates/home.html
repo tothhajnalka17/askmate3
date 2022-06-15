@@ -4,7 +4,7 @@
 
 {% block body %}
 
-
+<div style="margin-left: 3rem">
     <div>
 
         <form action="/search" >
@@ -14,61 +14,43 @@
         </form>
     </div>
 
-    <div class="col-md-12">
-        <table id="example" class="table table-striped table-bordered" style="width:100%">
-          <thead>
-            <tr>
-              <td></td>
-              <td>Submission time</td>
-              <td>View Number</td>
-              <td>Vote Number</td>
+        {% for res in list_searched_items %}
 
-              <td>Message</td>
-              <td>Image</td>
-            </tr>
-          </thead>
-          <tbody>
-<tr>
-    <td>The following question(s) contain(s) the searched phrase: <u>{{ searched_phrase }}</u></td>
-</tr>
-            {% for row in list_searched_items %}
-            <tr>
+    <div style="margin-top: 5rem" class="container-fluid border-bottom">
+        {% if answer == [] %}
+        <div class="border-bottom">
+            <h2 style="text-align: center"> Title:</h2>
+            <br>
+            <p style="font-size: 22px"> {{ res.title }} </p>
+        </div>
+        {% endif %}
+        <div style="margin-top: 5rem">
+            <h2 style="text-align: center"> {{ type }}  </h2>
+            <br>
+            <p style="font-size: 22px"> {{ res.message }}</p>
+        </div>
+    </div>
+            <br>
+        <a class="btn btn-warning btn-circle text-uppercase" href="/question/{{ res.id }}"> check it </a>
 
-                <td><a href="/question/{{row[0]}}">{{ row[4] }}</a></td>
-                <td>{{row[1]}}</td>
-                <td>{{row[2]}}</td>
-                <td>{{row[3]}}</td>
+    {% endfor %}
 
-                <td>{{row[5]}}</td>
-                <td>{{row[6]}}</td>
-            </tr>
-            {% endfor %}
-<tr>
-    <td>The following answer(s) of question(s) contains the searched phrase: <u>{{ searched_phrase }}</u></td>
-</tr>
-          {% for row in list_searched_answer %}
-            <tr>
-                <td><a href="/question/{{row[0]}}">{{ row[4] }}</a></td>
-                <td>{{row[1]}}</td>
-                <td>{{row[2]}}</td>
-                <td>{{row[3]}}</td>
-                <td>{{row[4]}}</td>
-                <td>{{row[5]}}</td>
-                <td>{{row[6]}}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+
     {% if session.username %}
 
 <p>Welcome, {{ session.username}}!</p>
-<a href="{{url_for('logout')}}">Logout</a><br>
+<a class="btn btn-warning btn-circle text-uppercase" href="{{url_for('logout')}}">Logout</a><br>
 
 {% else %}
-<h2>You are not logged in!</h2>
-<a href="{{url_for('register')}}">Register</a><br>
-<a href="{{url_for('userlogin')}}">Login</a><br>
+ <div style="margin-top: 6rem">
+<h2 >You are not logged in!</h2>
+    <ul class="text-uppercase list-inline" style="text-align: left; margin-top: 1rem">
+        <li class="dd" style="margin-top: 2rem"><a class="btn btn-warning btn-circle text-uppercase" href="{{url_for('register')}}">Register</a></li>
+            <br>
+        <li class="dd" style="margin-top: 1rem"><a class="btn btn-warning btn-circle text-uppercase" href="{{url_for('userlogin')}}">Login</a></li>
+            <br>
+    </ul>
+  </div>
 {% endif%}
-
+</div>
 {% endblock %}
