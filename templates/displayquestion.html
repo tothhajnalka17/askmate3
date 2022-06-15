@@ -44,6 +44,7 @@
                                             <li class="dd">{{ question_comments.submission_time }}</li>
                                             <li class="dd">Edited {{ question_comments.edited_count }} times.</li>
                                             <li class="dd"><a href="/comment/{{ question_comments.id }}/edit">Edit comment</a></li>
+                                              <li class="dd"><a href="/comment/{{ question_comments.id }}/delete" class="delete" data-confirm="Are you sure to delete this item?">Delete</a></li>
                                           </ul>
                                           <p class="media-comment">
                                             {{ question_comments.message }}
