@@ -48,7 +48,7 @@ def add_comment_to_question(cursor, submission_time, question_id, message, edite
 
 @database_common.connection_handler
 def get_answers_by_question_id(cursor, question_id):
-    cursor.execute(f"SELECT * FROM answer WHERE question_id = '{question_id}' ORDER BY id ASC")
+    cursor.execute(f"SELECT * FROM answer WHERE question_id = '{question_id}' ORDER BY submission_time DESC;")
     return cursor.fetchall()
 
 
@@ -208,7 +208,8 @@ def get_answer_id_by_question_id(cursor, question_id):
 
 @database_common.connection_handler
 def get_answer_comment(cursor):
-    cursor.execute(f"SELECT * FROM comment WHERE answer_id != 0 ")
+    cursor.execute("SELECT * FROM comment WHERE answer_id != 0 ORDER BY submission_time DESC;")
+
     return cursor.fetchall()
 
 @database_common.connection_handler
