@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block head %} Edit a Comment # {{ comment.id }}on a Question {{ question_id }}{% endblock %}
+
+{% block body %}
+
+<form action="/comment/{{ comment.id }}/edit" method="POST" id="txtArea">
+  <div class="form-group-add">
+    <p><label for="message">Edit the comment</label></p>
+    <textarea id="message" name="comment-text" rows="10" cols="100">{{ comment.message }}</textarea>
+    <br>
+      <button type="submit">Edit</button>
+  </div>
+</form>
+
+{% endblock %}
