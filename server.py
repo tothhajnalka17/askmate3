@@ -362,6 +362,25 @@ def search():
     return render_template('home.html', list_searched_items=question_final, list_searched_answer=final_list, searched_phrase=search_phrase)
 
 
+@app.route('/comment/<int:comment_id>/edit', methods=["GET", "POST"])
+def edit_question_comment(comment_id):
+    comment = data_manager.get_comment(comment_id)
+    question_id = comment["question_id"]
+    edited_count = comment['edited_count']
+    submission_time = comment['submission_time']
+    if request.method == "GET":
+        return render_template('edit_question_comment.html', comment=comment, question_id=question_id)
+    else:
+        new_comment = request.form["comment-text"]
+        submission_time = datetime.datetime.now()
+        if type(edited_count) is None:
+            edited_count = 1
+        else:
+            edited_count += 1
+        data_manager.update_comment(id=comment_id, message=new_comment, edited_count=edited_count, submission_time=submission_time)
+        return redirect(url_for('get_display_question', question_id=question_id))
+
+
 if __name__ == "__main__":
     app.run(
         debug=True
