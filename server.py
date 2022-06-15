@@ -242,7 +242,7 @@ def register():
             flash('Username must be at least 2 characters long!')
             return render_template('register.html')
 
-        elif len(original_password) <= 6:
+        elif len(original_password) <= 5:
             flash('Password must be at least 6 characters long!')
             return render_template('register.html')
 
