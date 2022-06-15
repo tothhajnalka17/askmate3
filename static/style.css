@@ -1,17 +1,22 @@
-.login_right{
-  position: fixed;
-  left: 90%;
+
+.home{
+  position: static;
+  left: 20px
 }
-.top_question{
-  position: relative;
-  right:-35%;
+.top-question{
+    position: static;
+    margin-left: 2rem;
 }
 
-.logo_left{
-  position: fixed;
-  left: 5%;
+.post-question{
+    position: static;
+    margin-left: 1rem;
 }
 
+.list-users{
+    position: static;
+    margin-left: 1rem;
+}
 .cards{
   position: static;
   left: 25%;
@@ -28,6 +33,10 @@
   position: static;
   right: 0%;
 
+}
+.top-fixed{
+    position: fixed;
+    top: 1rem
 }
 
 .orangebtn{
