@@ -3,17 +3,6 @@
 
 {% block body %}
 
-<script>
-    function show_hide() {
-      var x = document.getElementById("question_comments");
-      if (x.style.display === "none") {
-        x.style.display = "block";
-      } else {
-        x.style.display = "none";
-      }
-    }
-
-</script>
 
     {% for question in question_data  %}
         <div class="container; ">
@@ -34,30 +23,49 @@
                 {{ question.message }}
             </p>
 
-            <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply"><span class="glyphicon glyphicon-share-alt"></span> {{ question.vote_number }} like</a>
-            <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide()"><span class="glyphicon glyphicon-comment"></span> comments</a>
+            <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply">
+                <span class="glyphicon glyphicon-share-alt"></span> {{ question.vote_number }} like</a>
+            <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide()">
+                <span class="glyphicon glyphicon-comment"></span> comments</a>
 
-            {% for question_comments in comment_question_data %}
+
+
+                <script>
+                    function show_hide() {
+                        var x = document.getElementById("question_comments");
+                        if (x.style.display === "block") {
+                        x.style.display = "none";
+                        } else {
+                        x.style.display = "block";
+                        }
+                    }
+                </script>
 
                 <div class="collapse" id="question_comments" style="padding: 0px 50px; margin-top: 25px">
+                {% for question_comments in comment_question_data %}
                 <ul class="media-list">
                 <li class="media media-replied">
                     <div class="media-body">
                       <div class="well well-lg">
-                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> unknown </h4>
+                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> unknown user </h4>
                           <ul class="media-date text-uppercase reviews list-inline">
                             <li class="dd">{{ question_comments.submission_time }}</li>
-                            <li class="dd">Edited {{ question_comments.edited_count }} times.</li>
+                          </ul>
+                          <ul class="text-uppercase list-inline" style="text-align: right; margin-top: 1rem">
+                              <li >Edited {{ question_comments.edited_count }} times.</li>
                             <li class="dd"><a href="/comment/{{ question_comments.id }}/edit">Edit comment</a></li>
                           </ul>
                           <p class="media-comment">
                             {{ question_comments.message }}
                           </p>
-
                       </div>
                     </div>
+            </li>
+            </ul>
+                    {% endfor %}
 
-                <div class="media-body">
+                <ul style="padding: 0px 50px ">
+                    <div class="media-body">
                     <div class="well well-lg" methods="post" >
                         <form name="submit_answer_comments" method="post" action="{{ url_for(('add_comment_to_question'), question_id=question.id) }}">
                             <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> post your comment:</h4>
@@ -66,10 +74,11 @@
                         </form>
                     </div>
                 </div>
-            </li>
-            </ul>
+                </ul>
+
             </div>
-            {% endfor %}
+
+
 
 
     </div>
@@ -95,10 +104,10 @@
                 <script>
                 function show_hide_answer(answer_id) {
                   var x = document.getElementById("answer_comments"+answer_id);
-                  if (x.style.display === "none") {
-                    x.style.display = "block";
-                  } else {
+                  if (x.style.display === "block") {
                     x.style.display = "none";
+                  } else {
+                    x.style.display = "block";
                   }
                 }
                 </script>

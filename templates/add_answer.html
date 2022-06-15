@@ -38,10 +38,13 @@
                 <li><a href="#account-settings" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Account settings</h4></a></li>
             </ul>
            <div>
+               <form name="new_answer" action="/question/{{ question.id }}" method="post">
                <label for="story">Tell us your story:</label>
                <textarea style="padding: 50px; margin: 50px" id="new_answer" name="new_answer"
                                             rows="5" cols="33">
                </textarea>
+                   <button type="submit" name="new_answer">post your answer</button>
+               </form>
            </div>
         </div>
     </div>

@@ -51,10 +51,10 @@ def get_display_question(question_id):
 
     elif request.method == 'POST':
 
-        if "submit_answer" in request.form:
+        if "new_answer" in request.form:
             submission_time = datetime.datetime.now()
-            vote_number = question_data['view_number']
-            message = request.form.get("answer")
+            vote_number = 0
+            message = request.form.get("new_answer")
             image = "something.jpg"
             data_manager.add_answer(submission_time, vote_number, question_id, message, image)
             return redirect(url_for('get_display_question', question_id=question_id))
