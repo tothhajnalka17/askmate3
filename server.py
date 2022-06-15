@@ -335,10 +335,10 @@ def search():
         if questions != [] and answers != []:
             result = answers + questions
             type = "both"
-        elif questions == []:
+        elif questions == [] and answers != []:
             result = answers
             type = "answer"
-        elif answers == []:
+        elif answers == [] and questions != []:
             result = questions
             type = "question"
 

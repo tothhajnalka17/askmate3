@@ -42,7 +42,9 @@
             <br>
             <p style="font-size: 22px"> {{ res.title }} </p>
         </div>
-        {% else %}
+        {% endfor %}
+        {% elif quest == [] and answer != [] %}
+        {% for res in list_searched_items %}
 
 
 
