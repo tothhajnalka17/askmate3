@@ -1,15 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<style>
-body {
-  background-image: url('/static/background-final_web.jpg');
-	background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
 
-}
-</style>
     <meta charset="UTF-8">
     <meta>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -18,34 +10,33 @@ body {
     <link rel="stylesheet" href="/static/style.css" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
-	<nav class="navbar navbar-expand-lg">
-		<div class="container-fluid ">
-			<div class="logo_left">
-				<a class="navbar-brand text-white" href="/"><i class="fa fa-graduation-cap fa-lg mr-2" ></i>ARCHY</a>
-			</div>
 
-			<div class="collapse navbar-collapse" id="nvbCollapse">
-				<ul class="navbar-nav ml-auto top_question">
-					<li class="nav-item pl-1">
-						<a class="nav-link" href="/list"><i class="fa fa-home fa-fw mr-1"></i>Top questions</a>
-					</li>
-					<li class="nav-item pl-1">
-						<a class="nav-link" href="/add_question"><i class="fa fa-th-list fa-fw mr-1"></i>Post question</a>
-					</li>
-				</ul>
+	<nav class="navbar fixed-top navbar-expand-lg navbar-light white z-depth-5" >
+		<ul class="navbar-nav ml-auto" style="position: fixed">
+			<li class="nav-item pl-1">
+            <a class="navbar-brand text-white" href="/"><i class="fa fa-graduation-cap fa-lg mr-2" ></i>ARCHY</a>
+		    </li>
 
-				<ul class="navbar-nav ml-auto login_right">
-					<li class="nav-item pl-1">
-						<a class="nav-link" href="/"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1 "></i>Login</a>
-					</li>
-					<li class="nav-item pl-1" >
-						<a class="nav-link" href="/register"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1"></i>Register</a>
-					</li>
 
-				</ul>
-			</div>
-		</div>
+            <li class="nav-item pl-1">
+                <a class="nav-link" href="/list"><i class="fa fa-home fa-fw mr-1"></i>Top questions</a>
+            </li>
+            <li class="nav-item pl-1">
+                <a class="nav-link" href="/add_question"><i class="fa fa-th-list fa-fw mr-1"></i>Post question</a>
+            </li>
+
+
+
+            <li class="nav-item pl-1">
+                <a class="nav-link" href="/login"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1 "></i>Login</a>
+            </li>
+            <li class="nav-item pl-1" >
+                <a class="nav-link" href="/register"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1"></i>Register</a>
+            </li>
+
+        </ul>
 	</nav>
+
 </head>
 <body>
 {% with messages = get_flashed_messages()  %}

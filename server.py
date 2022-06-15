@@ -88,7 +88,10 @@ def get_display_question(question_id):
 
 @app.route("/question/<int:question_id>/new-answer", methods=["GET", "POST"])
 def add_answer(question_id):
-    if "answer" in request.form:
+    if request.method == "GET":
+        question_data = data_manager.get_question_by_id(question_id)
+        return render_template('add_answer.html', question_id=question_id, question_data=question_data)
+    elif "answer" in request.form:
         if request.method == "POST":
             question_data = data_manager.get_question_by_id(question_id)
             return render_template('add_answer.html', question_id=question_id, question_data=question_data)
@@ -111,7 +114,6 @@ def add_comment_to_question(question_id):
         submission_time = datetime.datetime.now()
         message = request.form.get("comment")
         data_manager.add_comment_to_question(submission_time, int(question_id), message)
-        print(submission_time, question_id, message)
         return redirect(url_for('get_display_question', question_id=question_id))
 
 
@@ -196,13 +198,13 @@ def edit_answer(answer_id):
 @app.route("/question/<int:question_id>/vote-up", methods=["POST", "GET"])
 def vote_up(question_id):
     data_manager.update_up_vote(question_id)
-    return redirect(url_for('route_list'))
+    return redirect(url_for('get_display_question', question_id=question_id))
 
 
 @app.route("/question/<int:question_id>/vote-down", methods=["POST", "GET"])
 def vote_down(question_id):
     data_manager.update_down_vote(question_id)
-    return redirect(url_for('route_list'))
+    return redirect(url_for('get_display_question', question_id=question_id))
 
 
 @app.route("/register", methods=['GET', 'POST'])

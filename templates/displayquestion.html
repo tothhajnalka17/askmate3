@@ -2,96 +2,142 @@
 {% block head %} Home Page {% endblock %}
 
 {% block body %}
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script>
+    function show_hide() {
+      var x = document.getElementById("question_comments");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+    function show_hide_answer() {
+      var x = document.getElementById("answer_comments");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+</script>
+
+    {% for question in question_data  %}
+    <div class="container; ">
+    <div class="row">
+    <div class="col-xs-10 col-md-offset-1">
+        <h3>
+           Question #{{ question.id }}
+        </h3>
+        <br>
+        <h1>
+            {{ question.title }}
+        </h1>
+        <p style="font-weight: lighter">
+            {{ question.message }}
+        </p>
+        <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply"><span class="glyphicon glyphicon-share-alt"></span> {{ question.vote_number }} like</a>
+        <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide()"><span class="glyphicon glyphicon-comment"></span> comments</a>
+        {% for question_comments in comment_question_data %}
+        <div class="collapse" id="question_comments" style="padding: 0px 50px; margin-top: 25px">
+            <ul class="media-list">
+                                <li class="media media-replied">
+                                    <div class="media-body">
+                                      <div class="well well-lg">
+                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> unknow? </h4>
+                                          <ul class="media-date text-uppercase reviews list-inline">
+                                            <li class="dd">{{ question_comments.submission_time }}</li>
+                                          </ul>
+                                          <p class="media-comment">
+                                            {{ question_comments.message }}
+                                          </p>
+
+                                      </div>
+                                    </div>
+                                </li>
+            </ul>
+        </div>
+            {% endfor %}
+    </div>
+    </div>
+    </div>
 
 
+<div class="container">
+  <div class="row">
+    <div class="col-sm-20 col-sm-offset--3" id="logout">
+        <div class="page-header">
+            <h3 class="reviews">Leave your answer</h3>
 
+        </div>
+        <div class="comment-tabs">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Answers</h4></a></li>
+                <li><a href= "{{ question.id }}/new-answer" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Add answer</h4></a></li>
+                <li><a href="#account-settings" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Account settings</h4></a></li>
 
-      {% for question in question_data %}
+            </ul>
+            {% for answer in answer_data %}
+                <div class="tab-content">
+                    <div class="tab-pane active" id="comments-logout">
+                        <ul class="media-list">
 
-              <div class="card text-antiquewhite mb-3 shadow-lg p3 mb-5 mt-5 border border-dark center" style="width: 80rem; background-color: dimgrey">
-                <div class="d-flex">
+                          <li class="media">
+                            <div class="media-body">
+                              <div class="well well-lg">
+                                  <h4 class="media-heading text-uppercase reviews">unknow</h4>
+                                  <ul class="media-date text-uppercase reviews list-inline">
+                                    <li class="dd">{{ answer.submission_time }}</li>
+                                  </ul>
+                                  <p class="media-comment">
+                                    {{ answer.message }}
+                                  </p>
+                                  <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply"><span class="glyphicon glyphicon-share-alt"></span> [{{ answer.vote_number }}] like</a>
+                                  <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide_answer()"><span class="glyphicon glyphicon-comment"></span> comments</a>
 
-                </div>
-                  <div class="card-body">
-                  <h2 class="card-title">{{ question.title }}</h2>
-                  <p class="card-text">{{ question.message }}.</p>
-                      <div >
-                          <br>
-                          <br>
-                      </div >
+                              </div>
+                            </div>
 
-                      <div class="mb-1 ">
-                          <form method="post">
-                            <label  class="form-label gstbackground">comment to this question:</label>
-                            <textarea class="form-control qstbackground" id="message" name="message" rows="3"  placeholder="....."></textarea>
-                            <br>
-                              <div class="d-flex justify-content-between">
-                            <button name="submit_comment"  type="submit" class="submitbtn"> Post your comment</button>
-                          </form>
-                          <form action="/question/{{ question_id }}/new-answer" method="post" class="submitbtn">
-                            <input type="submit"  name="answer" value="Add an answer" />
-                          </form>
-                      </div>
-                      </div>
-                        <div class="card-text d-flex justify-content-between">
-                              <h5>  {{ question.view_number }} view </h5>
-                                <h5 style="text-align: right" >{{ question.vote_number }} likes</h5 >
-                        </div>
-                      {% for question_comment in comment_question_data %}
-                      <div class=" d-flex justify-content-between">
-                          <p class="card-text"> {{ question_comment.message }} </p>
-                          <p class="card-text"> {{ question_comment.submission_time}}</p>
-                      </div>
-                      {% endfor %}
-                </div>
+                            <div class="collapse" id="answer_comments">
+                            {% for answer_comment in comment_answer_data %}
+                            <ul class="media-list">
+                                <li class="media media-replied">
 
-      {% endfor %}
-</div>
-<br>
-<h1 style="text-align: center" class="text-antiquewhite" > Possible answer </h1>
+                                    <div class="media-body">
+                                      <div class="well well-lg">
+                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> unknow people</h4>
+                                          <ul class="media-date text-uppercase reviews list-inline">
+                                            <li class="dd"> {{ answer_comment.submission_time }}</li>
+                                          </ul>
+                                          <p class="media-comment">
+                                            {{ answer_comment.message }}
+                                            </p>
 
-<div>
-
-</div>
-{% for answer in answer_data %}
-<div class="col-md-12">
-
-
-            <div class="card text-antiquewhite mb-3 shadow-lg p3 mb-5 mt-5 border border-dark center" style="width: 80rem; background-color: dimgrey">
-                <div class="d-flex">
-
-                </div>
-                  <div class="card-body">
-                  <h1 class="card-title">{{ answer.title }}</h1>
-                  <h1 class="card-text">{{ answer.message }}.</h1>
-                      <div >
-                          <br>
-                          <br>
-                      </div >
-                    <h3> comment(s) </h3>
-
-
-                      {% for answer_comment in comment_answer_data %}
-                    <div>
-
-                      <div class="d-flex mb-5  card-text" >
-
-                          <td class="card-text" >{{ answer_comment.message }}</td>
-                          <td class="card-text"> {{ answer_comment.submission_time}} </td>
-
-                          <div>
-
-                        </div>
-                      </div>
-
+                                        </div>
+                                    </div>
+                                </li>
+                              </ul>
+                                {% endfor %}
+                            </div>
+                          </li>
+                        </ul>
                     </div>
-                     {% endfor %}
-                    <a href="/answer/{{ answer.id }}/new-comment" name="comment" class="btn submitbtn" >comment</a>
-                      <a href="/answer/{{ answer.id }}/delete" name="delete-answer" class="btn submitbtn">delete</a>
-                    <a href="/answer/{{ answer.id }}/edit" name="edit" class="btn submitbtn">edit</a>
-                  </div>
+                </div>
             </div>
-</div>
+            {% endfor %}
+        </div>
+    </div>
+ </div>
+
 
 {% endfor %}
+  <div class="page-header text-center">
+    <h3 class="reviews"><span class="glyphicon glyphicon-magnet"></span> Archdaily by  Hajni, Marci, Fülöp</h3>
+  </div>
+  <div class="notes text-center"><small>Image credits: uifaces.com</small></div>
+</div>
+
+
 {% endblock %}
