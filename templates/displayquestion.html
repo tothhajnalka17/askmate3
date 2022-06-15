@@ -10,25 +10,23 @@
         <div class="col-xs-10 col-md-offset-1">
 
             <h3>
-            Question #{{ question.id }}
+            <b>Question #{{ question.id }}:</b>
             </h3>
 
-            <br>
-
             <h1>
-                {{ question.title }}
+                <u>{{ question.title }}</u>
             </h1>
-
-            <p style="font-weight: lighter">
+                <br>
+            <h3>
                 {{ question.message }}
-            </p>
+            </h3>
 
             <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply">
                 <span class="glyphicon glyphicon-thumbs-up"></span> {{ question.vote_number }} like</a>
             <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide()">
-                <span class="glyphicon glyphicon-comment"></span> comments</a>
+                <span class="glyphicon glyphicon-comment"></span>Show comments</a>
             <a class="btn btn-danger btn-circle text-uppercase" href="/delete/{{ question_id }}" id="question_delete">
-                <span class="glyphicon glyphicon-remove"></span> {{ question_id }} Delete</a>
+                <span class="glyphicon glyphicon-remove"></span>Delete</a>
 
 
 
@@ -49,7 +47,7 @@
                 <li class="media media-replied">
                     <div class="media-body">
                       <div class="well well-lg">
-                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> unknown user </h4>
+                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-user"></span> unknown user </h4>
                           <ul class="media-date text-uppercase reviews list-inline">
                             <li class="dd">{{ question_comments.submission_time }}</li>
                           </ul>
@@ -57,13 +55,13 @@
                             <li >Edited {{ question_comments.edited_count }} times.</li>
 
                               <li class="dd">
-                              <a class="btn btn- btn-circle text-uppercase" href="/comment/{{ question_comments.id }}/edit">
-                                <span class="glyphicon glyphicon-edit"></span> {{ question_comments.id }} Edit</a>
+                              <a class="btn btn-warning btn-circle text-uppercase" href="/comment/{{ question_comments.id }}/edit">
+                                <span class="glyphicon glyphicon-edit"></span>Edit</a>
                               </li>
 
                             <li class="dd">
                               <a class="btn btn-danger btn-circle text-uppercase" href="/comment/{{ question_comments.id }}/delete" onclick="return confirm('Are you sure you want to delete this comment?')">
-                                <span class="glyphicon glyphicon-remove"></span> {{ question_comments.id }} Delete</a>
+                                <span class="glyphicon glyphicon-remove"></span>Delete</a>
                             </li>
                           </ul>
                           <p class="media-comment">
@@ -80,7 +78,7 @@
                     <div class="well well-lg" methods="post" >
                         <form name="submit_answer_comments" method="post" action="{{ url_for(('add_comment_to_question'), question_id=question.id) }}">
                             <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> post your comment:</h4>
-                            <textarea name="comment_question" placeholder="{{ question.id }}"></textarea>
+                            <textarea name="comment_question" rows="4" cols="155" ></textarea>
                             <button class="btn btn-warning btn-circle text-uppercase" name="comment_question" type="submit"> post comment </button>
                         </form>
                     </div>
@@ -129,21 +127,21 @@
                           <li class="media">
                             <div class="media-body">
                               <div class="well well-lg">
-                                  <h4 class="media-heading text-uppercase reviews">unknown user</h4>
+                                  <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-user"></span> unknown user</h4>
                                   <ul class="media-date text-uppercase reviews list-inline">
                                     <li class="dd">{{ answer.submission_time }}</li>
                                       <li class="dd">
                                           <a class="btn btn-danger btn-circle text-uppercase" href="/answer/{{ answer.id }}/delete" onclick="return confirm('Are you sure you want to delete this answer?')">
-                                            <span class="glyphicon glyphicon-remove"></span> {{ answer.id }} Delete</a>
+                                            <span class="glyphicon glyphicon-remove"></span>Delete</a>
                                       </li>
                                   </ul>
-                                  <p class="media-comment">
+                                  <h4 class="media-comment">
 
-                                      <a href="{{url_for('comment_to_answer', answer_id=answer.id)}}">Comment on answer_id: {{ answer.id }}</a><br>
+
                                     {{ answer.message }}
-                                  </p>
+                                  </h4>
                                   <a class="btn btn-info btn-circle text-uppercase" href="/question/{{ question_id }}/vote-up" id="reply"><span class="glyphicon glyphicon-thumbs-up"></span> [{{ answer.vote_number }}] Like</a>
-                                  <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide_answer({{ answer.id }})"><span class="glyphicon glyphicon-comment"></span> Show Comments</a>
+                                  <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="show_hide_answer({{ answer.id }})"><span class="glyphicon glyphicon-comment"></span> Show comments</a>
 
                               </div>
                             </div>
@@ -157,7 +155,7 @@
                                       <div class="well well-lg" methods="post" >
                                           <form name="submit_answer_comments" method="post" action="{{ url_for('comment_to_answer', answer_id = answer.id) }}">
                                           <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> post your comment:</h4>
-                                            <textarea name="comment_answer" placeholder="{{ answer.id }}"></textarea>
+                                            <textarea name="comment_answer" rows="4" cols="124"></textarea>
                                           <button class="btn btn-warning btn-circle text-uppercase" name="comment_answer" type="submit"> post comment </button>
                                           </form>
                                       </div>
@@ -172,7 +170,7 @@
 
                                     <div class="media-body">
                                       <div class="well well-lg">
-                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> unknown user</h4>
+                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-user"></span> unknown user</h4>
                                           <ul class="media-date text-uppercase reviews list-inline">
                                             <li class="dd"> {{ answer_comment.submission_time }}</li>
                                           </ul>
@@ -203,11 +201,8 @@
 
 
 {% endfor %}
-  <div class="page-header text-center">
-    <h3 class="reviews"><span class="glyphicon glyphicon-magnet"></span> Archdaily by  Hajni, Marci, Fülöp</h3>
-  </div>
-  <div class="notes text-center"><small>Image credits: uifaces.com</small></div>
-</div>
+
+
 
 
 {% endblock %}
