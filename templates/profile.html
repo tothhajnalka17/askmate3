@@ -6,8 +6,8 @@
 
     {% if session.username %}
 
-
-                <a href="{{url_for('logout')}}" class="btn btn-info btn-lg">
+<div class="container col-sm-20 col-sm-offset--3 bgdiv">
+                <a style="margin-top: 1rem; margin-bottom: 1rem" href="{{url_for('logout')}}" class="btn btn-info btn-lg">
                   <span class="glyphicon glyphicon-log-out"></span> Log out
                 </a>
 
@@ -28,15 +28,15 @@
             {% endfor %}
 
         </table>
-
+</div>
 {% else %}
 <br>
-<div style="margin-top: 5rem; margin-left: 42%; margin-right: 42%">
-    <h2 >You are not logged in!</h2>
+<div class="container col-sm-20 col-sm-offset--3 bgdiv">
+    <h2 style="text-align: center">You are not logged in!</h2>
     <ul class="text-uppercase list-inline" style="text-align: left; margin-top: 1rem">
-        <li class="dd" style="margin-top: 2rem; margin-left: 30%; margin-right: 28%"><a class="btn btn-warning btn-circle text-uppercase" href="{{url_for('register')}}">Register</a></li>
+        <li class="dd" style="margin-top: 2rem; margin-left: 45%; margin-right: 28%"><a class="btn btn-warning btn-circle text-uppercase" href="{{url_for('register')}}">Register</a></li>
             <br>
-        <li class="dd" style="margin-top: 1rem; margin-left: 34%; margin-right: 25%"><a class="btn btn-warning btn-circle text-uppercase" href="{{url_for('userlogin')}}">Login</a></li>
+        <li class="dd" style="margin-top: 1rem; margin-left: 46%; margin-right: 28%"><a class="btn btn-warning btn-circle text-uppercase" href="{{url_for('userlogin')}}">Login</a></li>
             <br>
     </ul>
 </div>

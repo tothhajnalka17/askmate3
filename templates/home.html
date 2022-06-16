@@ -5,7 +5,7 @@
 {% block body %}
 
 <div class="container bgdiv col-sm-20 col-sm-offset--3">
-    <div>
+    <div style="margin-top: 1rem">
 
         <form action="/search" >
             <label for="search-phrase">Search by phrase:</label>
@@ -18,7 +18,7 @@
     {% if type == "both" %}
         {% for ans in answer %}
         <div class="border-bottom">
-            <h2 style="text-align: center"> Answer:</h2>
+            <h2 style="text-align: center"> The following answer contains your search phrase </h2>
             <br>
             <p style="font-size: 22px"> {{ ans.message }} </p>
             <a class="btn btn-warning btn-circle text-uppercase" style="margin-top: 2rem" href="/question/{{ ans.question_id }}">check it</a>
@@ -26,7 +26,7 @@
         {% endfor %}
         {% for question in quest %}
             <div style="margin-top: 5rem" class="border-bottom">
-            <h2 style="text-align: center"> Question:  </h2>
+            <h2 style="text-align: center"> The following question contains your search phrase  </h2>
             <br>
             <p style="font-size: 22px"> {{ question.message }}</p>
              <a class="btn btn-warning btn-circle text-uppercase" style="margin-top: 2rem" href="/question/{{ question.id }}">check it</a>
@@ -68,11 +68,11 @@
 
 {% else %}
  <div style="margin-top: 6rem">
-<h2 >You are not logged in!</h2>
+<h2 style="text-align: center">You are not logged in!</h2>
     <ul class="text-uppercase list-inline" style="text-align: left; margin-top: 1rem">
-        <li class="dd" style="margin-top: 2rem"><a class="btn btn-warning btn-circle text-uppercase" href="{{url_for('register')}}">Register</a></li>
+        <li class="dd" style="margin-top: 2rem; margin-left: 45%"><a class="btn btn-warning btn-circle text-uppercase" href="{{url_for('register')}}">Register</a></li>
             <br>
-        <li class="dd" style="margin-top: 1rem"><a class="btn btn-warning btn-circle text-uppercase" href="{{url_for('userlogin')}}">Login</a></li>
+        <li class="dd" style="margin-top: 1rem; margin-left: 46%"><a class="btn btn-warning btn-circle text-uppercase" href="{{url_for('userlogin')}}">Login</a></li>
             <br>
     </ul>
   </div>
